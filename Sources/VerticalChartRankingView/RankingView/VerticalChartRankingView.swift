@@ -38,7 +38,7 @@ public class VerticalChartRankingView: UIView {
   
   public weak var dataSource: VerticalChartRankingViewDataSource?
   
-  lazy var viewModel = makeRankingViewVM()
+  public lazy var viewModel = makeRankingViewVM()
   lazy var scrollView = makeScrollView()
   lazy var overallView = makeOverallView()
   var lastIconViewLayer: IconViewLayer?
