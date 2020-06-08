@@ -24,7 +24,6 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewLineViewIconTransationDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
   func verticalChartRankingViewLineViewHeightScale(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewLineViewHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
-  func verticalChartRankingViewLineViewImageLayerHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewLineViewTextLayerHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewIconViewLayerScaleToValue(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewIconViewLayerOpacityDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
@@ -82,7 +81,6 @@ public class VerticalChartRankingView: UIView {
       return
     }
     let imageLayerHeight = viewModel.imageLayerHeight
-//    let imageLayerHeight = dataSource.verticalChartRankingViewLineViewImageLayerHeight(self)
     let textLayerHeight = dataSource.verticalChartRankingViewLineViewTextLayerHeight(self)
     let scale = dataSource.verticalChartRankingViewIconViewLayerScaleToValue(self)
     let width = viewModel.lineViewWidth / scale

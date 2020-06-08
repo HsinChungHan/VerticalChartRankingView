@@ -62,7 +62,6 @@ extension VerticalChartRankingView: LineViewDataSource {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
     return viewModel.imageLayerHeight
-//      dataSource.verticalChartRankingViewLineViewImageLayerHeight(self)
   }
   
   func lineViewTextLayerHeight(_ lineView: LineView) -> CGFloat {
