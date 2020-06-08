@@ -11,6 +11,7 @@ import HsinUtils
 
 //MARK: - RankingViewDataSource
 public protocol VerticalChartRankingViewDataSource: AnyObject {
+  typealias LineModelTuple = (id: String, value: String, icon: String)
   
   func verticalChartRankingViewContentSizeWidth(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewBackgroundColor(_ rankingView: VerticalChartRankingView) -> UIColor
@@ -19,7 +20,7 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewDoDrawLineAnimationWhileTransation(_ rankingView: VerticalChartRankingView) -> Bool
   func verticalChartRankingViewNumberOfPresentedViews(_ rankingView: VerticalChartRankingView) -> Int
   func verticalChartRankingViewPadding(_ rankingView: VerticalChartRankingView) -> CGFloat
-  func verticalChartRankingViewLineModels(_ rankingView: VerticalChartRankingView) -> [LineModel]
+  func verticalChartRankingViewLineModels(_ rankingView: VerticalChartRankingView) -> [LineModelTuple]
   func verticalChartRankingViewLineViewIconTransationDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
   func verticalChartRankingViewLineViewHeightScale(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewLineViewHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
@@ -172,7 +173,12 @@ public class VerticalChartRankingView: UIView {
     }
     let numberOfPresentingViews = dataSource.verticalChartRankingViewNumberOfPresentedViews(self)
     let padding = dataSource.verticalChartRankingViewPadding(self)
-    let lineModels = dataSource.verticalChartRankingViewLineModels(self).reversed() as [LineModel]
+    let lineModelTuples = dataSource.verticalChartRankingViewLineModels(self).reversed()
+    var lineModels = [LineModel]()
+    for tuple in lineModelTuples {
+      let lineModel = LineModel(id: tuple.id, value: Float(tuple.value)!, icon: UIImage(named: tuple.icon)!)
+      lineModels.append(lineModel)
+    }
     layoutIfNeeded()
     let vm = RankingViewVM(numberOfPresentingViews: numberOfPresentingViews, padding: padding, rawDataOflineModels: lineModels, rankingViewWidth: bounds.width)
     return vm
