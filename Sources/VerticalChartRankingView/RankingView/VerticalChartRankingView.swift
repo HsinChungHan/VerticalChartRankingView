@@ -43,14 +43,6 @@ public class VerticalChartRankingView: UIView {
   var lastIconViewLayer: IconViewLayer?
   var timer: Timer?
   
-  init() {
-    super.init(frame: .zero)
-  }
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
   override public func draw(_ rect: CGRect) {
     super.draw(rect)
     guard let dataSource = dataSource else {
