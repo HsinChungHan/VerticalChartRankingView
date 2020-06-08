@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RankingViewVM {
+public class RankingViewVM {
   let numberOfPresentingViews: Int
   let padding: CGFloat
   let rankingViewWidth: CGFloat
