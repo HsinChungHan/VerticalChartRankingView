@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class RankingViewVM {
+class VeritcalChartRankingViewVM {
   let numberOfPresentingViews: Int
   let padding: CGFloat
   let rankingViewWidth: CGFloat
@@ -33,6 +33,10 @@ public class RankingViewVM {
   var lineViewWidth: CGFloat {
     let calculator = Calculator()
     return calculator.calculateLineViewWidth(rankingViewWidth: rankingViewWidth, padding: padding, numberOfPresentedViews: numberOfPresentingViews)
+  }
+  
+  var imageLayerHeight: CGFloat {
+    return lineViewWidth * 1.5
   }
   
   var currentLineView: LineView? {

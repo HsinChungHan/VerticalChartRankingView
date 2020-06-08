@@ -38,7 +38,7 @@ public class VerticalChartRankingView: UIView {
   
   public weak var dataSource: VerticalChartRankingViewDataSource?
   
-  public lazy var viewModel = makeRankingViewVM()
+  lazy var viewModel = makeRankingViewVM()
   lazy var scrollView = makeScrollView()
   lazy var overallView = makeOverallView()
   var lastIconViewLayer: IconViewLayer?
@@ -77,49 +77,50 @@ public class VerticalChartRankingView: UIView {
   
   @objc func onTimerFires(sender: Timer) {
     lastIconViewLayer?.initializeLayer()
-      guard let lineModel = viewModel.lineModelsPopLast(), let dataSource = dataSource else {
-        invalidateTimer()
-        return
-      }
-      let imageLayerHeight = dataSource.verticalChartRankingViewLineViewImageLayerHeight(self)
-      let textLayerHeight = dataSource.verticalChartRankingViewLineViewTextLayerHeight(self)
-      let scale = dataSource.verticalChartRankingViewIconViewLayerScaleToValue(self)
-      let width = viewModel.lineViewWidth / scale
-      let iconViewLayerHeight = (imageLayerHeight + textLayerHeight) / scale
-      
-      //在這邊決定好 rank
-      viewModel.updatePresentedRank(currentLineModel: lineModel)
-      
-      //設定 iconViewLayer
-      let iconViewLayer = makeIconViewLayer()
-      lastIconViewLayer = iconViewLayer
-      iconViewLayer.frame = CGRect(x: frame.midX - width / 2 , y: frame.minY, width: width, height: iconViewLayerHeight)
+    guard let lineModel = viewModel.lineModelsPopLast(), let dataSource = dataSource else {
+      invalidateTimer()
+      return
+    }
+    let imageLayerHeight = viewModel.imageLayerHeight
+//    let imageLayerHeight = dataSource.verticalChartRankingViewLineViewImageLayerHeight(self)
+    let textLayerHeight = dataSource.verticalChartRankingViewLineViewTextLayerHeight(self)
+    let scale = dataSource.verticalChartRankingViewIconViewLayerScaleToValue(self)
+    let width = viewModel.lineViewWidth / scale
+    let iconViewLayerHeight = (imageLayerHeight + textLayerHeight) / scale
     
-      if viewModel.isCurrentLineModelAlreadyExistInPresentedLineModels {
-        if let currentLineView = viewModel.currentLineView {
-          currentLineView.updateDrawLine()
-          //FIXME: - 不知為何不能寫在外面，否則 scroll 的時候會 crash
-          overallView.layer.addSublayer(iconViewLayer)
-          iconViewLayer.launchAnimation(isFirstTimePresented: false)
-        }
-      }else {
-        viewModel.appendInPresentedLineModelsWith(lineModel: lineModel)
-        let lineView = makeLineView()
-        viewModel.appendInPresentedLineViewsWith(lineView: lineView)
-        
-        overallView.addSubview(lineView)
-        lineView.anchor(top: overallView.topAnchor, bottom: nil, leading: nil, trailing: overallView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: viewModel.lineViewWidth), size: .init(width: viewModel.lineViewWidth, height: bounds.height))
-        superview?.layoutIfNeeded()
-        lineView.drawLine()
+    //在這邊決定好 rank
+    viewModel.updatePresentedRank(currentLineModel: lineModel)
+    
+    //設定 iconViewLayer
+    let iconViewLayer = makeIconViewLayer()
+    lastIconViewLayer = iconViewLayer
+    iconViewLayer.frame = CGRect(x: frame.midX - width / 2 , y: frame.minY, width: width, height: iconViewLayerHeight)
+    
+    if viewModel.isCurrentLineModelAlreadyExistInPresentedLineModels {
+      if let currentLineView = viewModel.currentLineView {
+        currentLineView.updateDrawLine()
         //FIXME: - 不知為何不能寫在外面，否則 scroll 的時候會 crash
         overallView.layer.addSublayer(iconViewLayer)
-        iconViewLayer.launchAnimation(isFirstTimePresented: true)
+        iconViewLayer.launchAnimation(isFirstTimePresented: false)
       }
+    }else {
+      viewModel.appendInPresentedLineModelsWith(lineModel: lineModel)
+      let lineView = makeLineView()
+      viewModel.appendInPresentedLineViewsWith(lineView: lineView)
       
-      moveLineViews(lineViews: viewModel.presentedLineViews)
-      viewModel.presentedLineViews.forEach {
-        $0.updateDrawLine()
-      }
+      overallView.addSubview(lineView)
+      lineView.anchor(top: overallView.topAnchor, bottom: nil, leading: nil, trailing: overallView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: viewModel.lineViewWidth), size: .init(width: viewModel.lineViewWidth, height: bounds.height))
+      superview?.layoutIfNeeded()
+      lineView.drawLine()
+      //FIXME: - 不知為何不能寫在外面，否則 scroll 的時候會 crash
+      overallView.layer.addSublayer(iconViewLayer)
+      iconViewLayer.launchAnimation(isFirstTimePresented: true)
+    }
+    
+    moveLineViews(lineViews: viewModel.presentedLineViews)
+    viewModel.presentedLineViews.forEach {
+      $0.updateDrawLine()
+    }
   }
   
   func invalidateTimer() {
@@ -167,7 +168,7 @@ public class VerticalChartRankingView: UIView {
     CATransaction.commit()
   }
   
-  fileprivate func makeRankingViewVM() -> RankingViewVM {
+  fileprivate func makeRankingViewVM() -> VeritcalChartRankingViewVM {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -180,7 +181,7 @@ public class VerticalChartRankingView: UIView {
       lineModels.append(lineModel)
     }
     layoutIfNeeded()
-    let vm = RankingViewVM(numberOfPresentingViews: numberOfPresentingViews, padding: padding, rawDataOflineModels: lineModels, rankingViewWidth: bounds.width)
+    let vm = VeritcalChartRankingViewVM(numberOfPresentingViews: numberOfPresentingViews, padding: padding, rawDataOflineModels: lineModels, rankingViewWidth: bounds.width)
     return vm
   }
   
@@ -190,7 +191,7 @@ public class VerticalChartRankingView: UIView {
     }
     let color = dataSource.verticalChartRankingViewBackgroundColor(self)
     let scrollView = UIScrollView()
-//    scrollView.delegate = self
+    //    scrollView.delegate = self
     scrollView.isScrollEnabled = true
     scrollView.backgroundColor = color
     return scrollView

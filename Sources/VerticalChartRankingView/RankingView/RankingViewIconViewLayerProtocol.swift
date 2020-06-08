@@ -45,7 +45,8 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
-    let imageLayerHeight = dataSource.verticalChartRankingViewLineViewImageLayerHeight(self)
+//    let imageLayerHeight = dataSource.verticalChartRankingViewLineViewImageLayerHeight(self)
+    let imageLayerHeight = viewModel.imageLayerHeight
     let textLayerHeight = dataSource.verticalChartRankingViewLineViewTextLayerHeight(self)
     let lineViewIconHeight = imageLayerHeight + textLayerHeight
     return iconViewLayer.vm.initialTransationY - lineViewIconHeight / 2
@@ -55,7 +56,8 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
-    let imageLayerHeight = dataSource.verticalChartRankingViewLineViewImageLayerHeight(self)
+//    let imageLayerHeight = dataSource.verticalChartRankingViewLineViewImageLayerHeight(self)
+    let imageLayerHeight = viewModel.imageLayerHeight
     let textLayerHeight = dataSource.verticalChartRankingViewLineViewTextLayerHeight(self)
     let lineViewIconHeight = imageLayerHeight + textLayerHeight
     return iconViewLayer.vm.transationYToValue - lineViewIconHeight / 2
@@ -123,9 +125,10 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
-    let imgLayerHeight = dataSource.verticalChartRankingViewLineViewImageLayerHeight(self)
+//    let imgLayerHeight = dataSource.verticalChartRankingViewLineViewImageLayerHeight(self)
+    let imageLayerHeight = viewModel.imageLayerHeight
     let scaleToValue = dataSource.verticalChartRankingViewIconViewLayerScaleToValue(self)
-    return imgLayerHeight / scaleToValue
+    return imageLayerHeight / scaleToValue
   }
   
   func iconViewLayerTextLayerHeiht(_ iconViewLayer: IconViewLayer) -> CGFloat {
