@@ -117,6 +117,7 @@ extension LineView {
     label.textColor = .white
     label.font = .boldSystemFont(ofSize: 20)
     label.text = id
+    label.adjustsFontSizeToFitWidth = true
     label.textAlignment = .center
     return label
   }
