@@ -43,8 +43,7 @@ public class VerticalChartRankingView: UIView {
   var lastIconViewLayer: IconViewLayer?
   var timer: Timer?
   
-  override public func draw(_ rect: CGRect) {
-    super.draw(rect)
+  public func launch() {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -78,6 +77,7 @@ public class VerticalChartRankingView: UIView {
     lastIconViewLayer?.initializeLayer()
     guard let lineModel = viewModel.lineModelsPopLast(), let dataSource = dataSource else {
       invalidateTimer()
+      scrollView.isScrollEnabled = true
       return
     }
     let imageLayerHeight = viewModel.imageLayerHeight
@@ -190,7 +190,7 @@ public class VerticalChartRankingView: UIView {
     let color = dataSource.verticalChartRankingViewBackgroundColor(self)
     let scrollView = UIScrollView()
     //    scrollView.delegate = self
-    scrollView.isScrollEnabled = true
+    scrollView.isScrollEnabled = false
     scrollView.backgroundColor = color
     return scrollView
   }
