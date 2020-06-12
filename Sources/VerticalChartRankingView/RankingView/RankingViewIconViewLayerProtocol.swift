@@ -68,6 +68,13 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return dataSource.verticalChartRankingViewIconViewLayerScaleToValue(self)
   }
   
+  func iconViewLayerScaleXToValue(_ iconViewLayer: IconViewLayer) -> CGFloat {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    return dataSource.verticalChartRankingViewIconViewLayerScaleXToValue(self)
+  }
+  
   func iconViewLayerLineViewDrawLineDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
@@ -108,14 +115,14 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
          fatalError("🚨 You have to set dataSource for RankingView.")
     }
     let lineViewHeight = dataSource.verticalChartRankingViewLineViewHeight(self)
-    return frame.minY + lineViewHeight
+    return bounds.minY + lineViewHeight
   }
   
   func iconViewLayerWidthOfLayer(_ iconViewLayer: IconViewLayer) -> CGFloat {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
-    let scaleToValue = dataSource.verticalChartRankingViewIconViewLayerScaleToValue(self)
+    let scaleToValue = dataSource.verticalChartRankingViewIconViewLayerScaleXToValue(self)
     return viewModel.lineViewWidth / scaleToValue
   }
   

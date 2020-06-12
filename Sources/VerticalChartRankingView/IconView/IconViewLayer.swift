@@ -16,6 +16,7 @@ protocol IconViewLayerDataSource: AnyObject {
   func iconViewLayerYTransationInitialToValue(_ iconViewLayer: IconViewLayer) -> CGFloat
   func iconViewLayerYTransationToValue(_ iconViewLayer: IconViewLayer) -> CGFloat
   func iconViewLayerScaleToValue(_ iconViewLayer: IconViewLayer) -> CGFloat
+  func iconViewLayerScaleXToValue(_ iconViewLayer: IconViewLayer) -> CGFloat
   
   func iconViewLayerLineViewDrawLineDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval
   func iconViewLayerOpacityDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval

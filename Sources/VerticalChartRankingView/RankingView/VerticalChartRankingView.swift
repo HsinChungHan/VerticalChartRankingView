@@ -25,6 +25,7 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewLineViewHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewLineViewTextLayerHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewIconViewLayerScaleToValue(_ rankingView: VerticalChartRankingView) -> CGFloat
+  func verticalChartRankingViewIconViewLayerScaleXToValue(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewIconViewLayerOpacityDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
   func verticalChartRankingViewIconViewLayerInitialYTransationDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
   func verticalChartRankingViewIconViewLayerTotoalDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
@@ -82,7 +83,8 @@ public class VerticalChartRankingView: UIView {
     let imageLayerHeight = viewModel.imageLayerHeight
     let textLayerHeight = dataSource.verticalChartRankingViewLineViewTextLayerHeight(self)
     let scale = dataSource.verticalChartRankingViewIconViewLayerScaleToValue(self)
-    let width = viewModel.lineViewWidth / scale
+    let scaleX = dataSource.verticalChartRankingViewIconViewLayerScaleXToValue(self)
+    let width = viewModel.lineViewWidth / scaleX
     let iconViewLayerHeight = (imageLayerHeight + textLayerHeight) / scale
     
     //在這邊決定好 rank
@@ -91,7 +93,7 @@ public class VerticalChartRankingView: UIView {
     //設定 iconViewLayer
     let iconViewLayer = makeIconViewLayer()
     lastIconViewLayer = iconViewLayer
-    iconViewLayer.frame = CGRect(x: frame.midX - width / 2 , y: frame.minY, width: width, height: iconViewLayerHeight)
+    iconViewLayer.frame = CGRect(x: frame.midX - width / 2 , y: bounds.minY + 50, width: width, height: iconViewLayerHeight)
     
     if viewModel.isCurrentLineModelAlreadyExistInPresentedLineModels {
       if let currentLineView = viewModel.currentLineView {

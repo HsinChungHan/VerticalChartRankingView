@@ -74,7 +74,7 @@ extension VerticalChartRankingView: LineViewDataSource {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
     let lineViewHeight = dataSource.verticalChartRankingViewLineViewHeight(self)
-    return frame.minY + lineViewHeight
+    return bounds.minY + lineViewHeight
   }
   
   func lineViewLineModel(_ lineView: LineView) -> LineModel {
