@@ -35,6 +35,11 @@ protocol LineViewDataSource: AnyObject {
   func lineViewTextLayerTextColor(_ lineView: LineView) -> UIColor
   func lineViewTextLayerBackgroundColor(_ lineView: LineView) -> UIColor
   func lineViewTextLayerFontSize(_ lineView: LineView) -> CGFloat
+  
+  func lineViewIDLabelBackgroundColor(_ lineView: LineView) -> UIColor
+  func lineViewIDLabelTextColor(_ lineView: LineView) -> UIColor
+  func lineViewIDLabelFont(_ lineView: LineView) -> UIFont
+  func lineViewIDLabelIsSizeToFit(_ lineView: LineView) -> Bool
 }
 
 
@@ -112,12 +117,23 @@ extension LineView {
 extension LineView {
   
   fileprivate func makeLabel(id: String) -> UILabel {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set max num for LineView's dataSource")
+    }
+    let backGroundColor = dataSource.lineViewIDLabelBackgroundColor(self)
+    let textColor = dataSource.lineViewIDLabelTextColor(self)
+    let font = dataSource.lineViewIDLabelFont(self)
+    let isSizeToFit = dataSource.lineViewIDLabelIsSizeToFit(self)
     let label = UILabel()
-    label.backgroundColor = .clear
-    label.textColor = .white
-    label.font = .boldSystemFont(ofSize: 20)
+    label.backgroundColor = backGroundColor
+    label.textColor = textColor
+    label.font = font
     label.text = id
-    label.adjustsFontSizeToFitWidth = true
+    if isSizeToFit {
+      label.adjustsFontSizeToFitWidth = true
+    }else {
+      label.numberOfLines = 2
+    }
     label.textAlignment = .center
     return label
   }
@@ -138,7 +154,7 @@ extension LineView {
   
   fileprivate func setupLayout() {
     addSubview(idLabel)
-    idLabel.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .zero, size: .init(width: 0, height: 50))
+    idLabel.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .zero, size: .init(width: 0, height: 80))
   }
 }
 

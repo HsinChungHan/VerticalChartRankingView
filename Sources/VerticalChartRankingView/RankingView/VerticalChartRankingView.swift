@@ -14,6 +14,12 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   
   func verticalChartRankingViewContentSizeWidth(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewBackgroundColor(_ rankingView: VerticalChartRankingView) -> UIColor
+  
+  func verticalChartRankingViewLineViewIDLabelBackgroundColor(_ rankingView: VerticalChartRankingView) -> UIColor
+  func verticalChartRankingViewLineViewIDLabelTextColor(_ rankingView: VerticalChartRankingView) -> UIColor
+  func verticalChartRankingViewLineViewIDLabelFont(_ rankingView: VerticalChartRankingView) -> UIFont
+  func verticalChartRankingViewLineViewIDLabelIsSizeToFit(_ rankingView: VerticalChartRankingView) -> Bool
+  
   func verticalChartRankingViewXTransactionDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
   func verticalChartRankingViewDoDrawLineViewDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
   func verticalChartRankingViewDoDrawLineAnimationWhileTransation(_ rankingView: VerticalChartRankingView) -> Bool
@@ -31,11 +37,18 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewIconViewLayerTotoalDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
   func verticalChartRankingViewHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewLineViewColor(_ rankingView: VerticalChartRankingView) -> UIColor
+  
+}
+
+public protocol VerticalChartRankingViewDelegate: AnyObject {
+  func verticalChartRankingDidStart(_ rankingView: VerticalChartRankingView)
+  func verticalChartRankingDidStop(_ rankingView: VerticalChartRankingView)
 }
 
 public class VerticalChartRankingView: UIView {
   
   public weak var dataSource: VerticalChartRankingViewDataSource?
+  public weak var delegate: VerticalChartRankingViewDelegate?
   
   lazy var viewModel = makeRankingViewVM()
   lazy var scrollView = makeScrollView()
@@ -74,6 +87,7 @@ public class VerticalChartRankingView: UIView {
   }
   
   @objc func onTimerFires(sender: Timer) {
+    delegate?.verticalChartRankingDidStart(self)
     lastIconViewLayer?.initializeLayer()
     guard let lineModel = viewModel.lineModelsPopLast(), let dataSource = dataSource else {
       invalidateTimer()
@@ -127,6 +141,7 @@ public class VerticalChartRankingView: UIView {
       timer!.invalidate()
     }
     timer = nil
+    delegate?.verticalChartRankingDidStop(self)
   }
   
   //因為 CABasicAnimation 會以 view 的中心點去對齊 fromValue 和 toValue

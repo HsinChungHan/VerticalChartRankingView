@@ -9,6 +9,38 @@
 import UIKit
 
 extension VerticalChartRankingView: LineViewDataSource {
+  func lineViewIDLabelBackgroundColor(_ lineView: LineView) -> UIColor {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    let color = dataSource.verticalChartRankingViewLineViewIDLabelBackgroundColor(self)
+    return color
+  }
+  
+  func lineViewIDLabelTextColor(_ lineView: LineView) -> UIColor {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    let color = dataSource.verticalChartRankingViewLineViewIDLabelTextColor(self)
+    return color
+  }
+  
+  func lineViewIDLabelFont(_ lineView: LineView) -> UIFont {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    let font = dataSource.verticalChartRankingViewLineViewIDLabelFont(self)
+    return font
+  }
+  
+  func lineViewIDLabelIsSizeToFit(_ lineView: LineView) -> Bool {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    let isSizeToFit = dataSource.verticalChartRankingViewLineViewIDLabelIsSizeToFit(self)
+    return isSizeToFit
+  }
+  
   func lineViewMaxValueOfRankingView(_ lineView: LineView) -> Float {
     return viewModel.rankingViewMaxValue
   }
