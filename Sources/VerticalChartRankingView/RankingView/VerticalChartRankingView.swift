@@ -188,7 +188,7 @@ public class VerticalChartRankingView: UIView {
     }
     let numberOfPresentingViews = dataSource.verticalChartRankingViewNumberOfPresentedViews(self)
     let padding = dataSource.verticalChartRankingViewPadding(self)
-    let lineModelTuples = dataSource.verticalChartRankingViewLineModels(self).reversed()
+    let lineModelTuples = dataSource.verticalChartRankingViewLineModels(self)
     var lineModels = [LineModel]()
     for tuple in lineModelTuples {
       let lineModel = LineModel(id: tuple.id, value: tuple.value, icon: UIImage(named: tuple.icon)!)
