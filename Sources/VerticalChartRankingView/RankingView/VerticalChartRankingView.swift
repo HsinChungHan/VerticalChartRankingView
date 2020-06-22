@@ -20,21 +20,27 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewLineViewIDLabelFont(_ rankingView: VerticalChartRankingView) -> UIFont
   func verticalChartRankingViewLineViewIDLabelIsSizeToFit(_ rankingView: VerticalChartRankingView) -> Bool
   
+  func verticalChartRankingViewOneRoundDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
+  
   func verticalChartRankingViewXTransactionDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
   func verticalChartRankingViewDoDrawLineViewDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
-  func verticalChartRankingViewDoDrawLineAnimationWhileTransation(_ rankingView: VerticalChartRankingView) -> Bool
+  
+  func verticalChartRankingViewIconViewLayerOpacityDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
+  func verticalChartRankingViewIconViewLayerStayDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
+  func verticalChartRankingViewIconViewLayerFirstXYTransationDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
+  func verticalChartRankingViewIconViewLayerTotoalDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
+  
+  func verticalChartRankingViewLineViewIconYTransationDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
+  
   func verticalChartRankingViewNumberOfPresentedViews(_ rankingView: VerticalChartRankingView) -> Int
   func verticalChartRankingViewPadding(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewLineModels(_ rankingView: VerticalChartRankingView) -> [(id: String, value: Float, icon: String, description: String)]
-  func verticalChartRankingViewLineViewIconTransationDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
+  
   func verticalChartRankingViewLineViewHeightScale(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewLineViewHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewLineViewTextLayerHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewIconViewLayerScaleToValue(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewIconViewLayerScaleXToValue(_ rankingView: VerticalChartRankingView) -> CGFloat
-  func verticalChartRankingViewIconViewLayerOpacityDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
-  func verticalChartRankingViewIconViewLayerInitialYTransationDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
-  func verticalChartRankingViewIconViewLayerTotoalDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
   func verticalChartRankingViewHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewLineViewColor(_ rankingView: VerticalChartRankingView) -> UIColor
   
@@ -71,18 +77,16 @@ public class VerticalChartRankingView: UIView {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
-    let shouldDoDrawAnimationWhileTransation = dataSource.verticalChartRankingViewDoDrawLineAnimationWhileTransation(self)
-    let drawLineDuration = dataSource.verticalChartRankingViewDoDrawLineViewDuration(self)
-    let lineViewIconDuration = dataSource.verticalChartRankingViewLineViewIconTransationDuration(self)
-    let transationDuration = dataSource.verticalChartRankingViewXTransactionDuration(self)
+    
+//    let drawLineDuration = dataSource.verticalChartRankingViewDoDrawLineViewDuration(self)
+//    let lineViewIconDuration = dataSource.verticalChartRankingViewLineViewIconTransationDuration(self)
+//    let transationDuration = dataSource.verticalChartRankingViewXTransactionDuration(self)
+    let oneRoundDuration = dataSource.verticalChartRankingViewOneRoundDuration(self)
     //每次做完所有動畫後，再多一秒的停頓
-    var totalDuration: TimeInterval = 0.0
-    if shouldDoDrawAnimationWhileTransation {
-      totalDuration = max(drawLineDuration, lineViewIconDuration, transationDuration) + 1
-    }else {
-      totalDuration = transationDuration + max(drawLineDuration, lineViewIconDuration) + 1
-    }
-    let timer = Timer.init(timeInterval: totalDuration, target: self, selector: #selector(onTimerFires(sender:)), userInfo: nil, repeats: true)
+//    var totalDuration: TimeInterval = 0.0
+//    totalDuration = max(drawLineDuration, lineViewIconDuration, transationDuration)
+    
+    let timer = Timer.init(timeInterval: oneRoundDuration, target: self, selector: #selector(onTimerFires(sender:)), userInfo: nil, repeats: true)
     return timer
   }
   

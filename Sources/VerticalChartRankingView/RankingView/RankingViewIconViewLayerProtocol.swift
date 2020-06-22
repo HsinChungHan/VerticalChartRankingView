@@ -9,6 +9,13 @@
 import UIKit
 
 extension VerticalChartRankingView: IconViewLayerDataSource {
+  func iconViewLayerStayDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    return dataSource.verticalChartRankingViewIconViewLayerFirstXYTransationDuration(self)
+  }
+  
   
   func iconViewLayerOpacityDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval {
     guard let dataSource = dataSource else {
@@ -75,6 +82,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return dataSource.verticalChartRankingViewIconViewLayerScaleXToValue(self)
   }
   
+  //為了要算 lineView drawLine 的速度，所以要傳進去 lineView drawLine duration
   func iconViewLayerLineViewDrawLineDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
@@ -83,11 +91,11 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return duration
   }
   
-  func iconViewLayerInitialYTransationDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval {
+  func iconViewLayerFirstXYTransationDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
-    let duration = dataSource.verticalChartRankingViewIconViewLayerInitialYTransationDuration(self)
+    let duration = dataSource.verticalChartRankingViewIconViewLayerFirstXYTransationDuration(self)
     return duration
   }
   

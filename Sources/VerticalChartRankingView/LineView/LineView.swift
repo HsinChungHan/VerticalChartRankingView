@@ -18,7 +18,7 @@ protocol LineViewDataSource: AnyObject {
   func lineViewMaxValueOfRankingView(_ lineView: LineView) -> Float
   
   func lineViewDrawLineDuration(_ lineView: LineView) -> TimeInterval
-  func lineViewIconTransationDuration(_ lineView: LineView) -> TimeInterval
+  func lineViewIconYTransationDuration(_ lineView: LineView) -> TimeInterval
   
   func lineViewErasedColor(_ lineView: LineView) -> UIColor
   func lineViewStrokeColor(_ lineView: LineView) -> UIColor
@@ -255,7 +255,7 @@ extension LineView {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set max num for LineView's dataSource")
     }
-    let duration = dataSource.lineViewIconTransationDuration(self)
+    let duration = dataSource.lineViewIconYTransationDuration(self)
     let imageLayerHeight = dataSource.lineViewImageLayerHeight(self)
     let textLayerHeight = dataSource.lineViewTextLayerHeight(self)
     let overallLayerHeight = imageLayerHeight + textLayerHeight

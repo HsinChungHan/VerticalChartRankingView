@@ -32,7 +32,8 @@ class IconViewLayerViewModel {
   private(set) var lineViewMaxY: CGFloat
   private(set) var lineViewHeightScale: CGFloat
   private(set) var drawLineDuration: TimeInterval
-  private(set) var opacityAndInitialDuration: TimeInterval
+  private(set) var opacityAndStayTransationAndFirstXYTransationDuration: TimeInterval
+  private(set) var isIconLayerFirstPresented: Bool = true
   
   var transationYToValue: CGFloat {
     let calculator = Calculator()
@@ -43,7 +44,7 @@ class IconViewLayerViewModel {
   //第一段移動到 lineView 時的 y
   var initialTransationY: CGFloat {
     let calculator = Calculator()
-    let toValue = calculator.calculateYPosition(lineViewHeight: lineViewHeight, lineViewHeightScale: lineViewHeightScale, lineViewValue: CGFloat(value), rankingViewMaxValue: CGFloat(rankingViewMaxValue), lineViewMaxY: lineViewMaxY, drawLineDuration: drawLineDuration, duration: opacityAndInitialDuration)
+    let toValue = calculator.calculateYPosition(lineViewHeight: lineViewHeight, lineViewHeightScale: lineViewHeightScale, lineViewValue: CGFloat(value), rankingViewMaxValue: CGFloat(rankingViewMaxValue), lineViewMaxY: lineViewMaxY, drawLineDuration: drawLineDuration, duration: opacityAndStayTransationAndFirstXYTransationDuration)
     return toValue
   }
   
@@ -54,6 +55,10 @@ class IconViewLayerViewModel {
     self.lineViewMaxY = lineViewMaxY
     self.lineViewHeightScale = lineViewHeightScale
     self.drawLineDuration = drawLineDuration
-    self.opacityAndInitialDuration = initialDuration
+    self.opacityAndStayTransationAndFirstXYTransationDuration = initialDuration
+  }
+  
+  func setIsIconLayerFirstPresented(isIconLayerFirstPresented: Bool) {
+    self.isIconLayerFirstPresented = isIconLayerFirstPresented
   }
 }

@@ -20,7 +20,8 @@ protocol IconViewLayerDataSource: AnyObject {
   
   func iconViewLayerLineViewDrawLineDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval
   func iconViewLayerOpacityDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval
-  func iconViewLayerInitialYTransationDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval
+  func iconViewLayerStayDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval
+  func iconViewLayerFirstXYTransationDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval
   func iconViewLayerTotoalDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval
   
   func iconViewLayerRankingViewMaxValue(_ iconViewLayer: IconViewLayer) -> Float
@@ -57,7 +58,9 @@ extension IconViewLayer {
     let lineViewHeightScale = dataSource.iconViewLayerLineViewHeightScale(self)
     let drawLineDuration = dataSource.iconViewLayerLineViewDrawLineDuration(self)
     let opacityDuration = dataSource.iconViewLayerOpacityDuration(self)
-    let initialDuration = dataSource.iconViewLayerInitialYTransationDuration(self) + opacityDuration
+    let stayTransation = dataSource.iconViewLayerStayDuration(self)
+    let firstXYTransation = dataSource.iconViewLayerFirstXYTransationDuration(self)
+    let initialDuration = opacityDuration + stayTransation + firstXYTransation
     
     let vm = IconViewLayerViewModel(lineModel: lineModel, rankingViewMaxValue: rankingViewMaxValue, lineViewHeight: lineViewHeight, lineViewMaxY: lineViewMaxY, lineViewHeightScale: lineViewHeightScale, drawLineDuration: drawLineDuration, initialDuration: initialDuration)
     return vm
@@ -135,6 +138,17 @@ extension IconViewLayer {
   }
   
   //第二段動畫，用於 iconImageLayer 移動到指定的 lineView
+  fileprivate func makeStayTransation(groupId id: String) -> CAAnimationGroup {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for IconView")
+    }
+    let duration = dataSource.iconViewLayerStayDuration(self)
+    let stayTransation = makeXTransation(fromValue: frame.midX, toValue: frame.midX)
+    return makeGroupAnimation(groupId: id, duration: duration, animations: stayTransation)
+  }
+  
+  
+  //第三段動畫，用於 iconImageLayer 移動到指定的 lineView
   fileprivate func makeXYTransationAndScaleGroup(groupId id: String, isFirstTimePresented: Bool) -> CAAnimationGroup {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for IconView")
@@ -144,7 +158,7 @@ extension IconViewLayer {
     let yTransationToValue = dataSource.iconViewLayerYTransationInitialToValue(self)
     let scaleToValue = dataSource.iconViewLayerScaleToValue(self)
     
-    let duration = dataSource.iconViewLayerInitialYTransationDuration(self)
+    let duration = dataSource.iconViewLayerFirstXYTransationDuration(self)
     
     
     let xTransation = makeXTransation(fromValue: frame.midX, toValue: xTransationToValue)
@@ -160,23 +174,23 @@ extension IconViewLayer {
     return makeGroupAnimation(groupId: id, duration: duration, animations: stayTransation)
   }
   
-  //第三段動畫，用於 iconImageLayer 移動到 lineView 的 value 所對應的 YPosition
+  //第四段動畫，用於 iconImageLayer 移動到 lineView 的 value 所對應的 YPosition
   fileprivate func makeYTransationGroup(groupId id: String) -> CAAnimationGroup {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for IconView")
     }
-    //第二段的 fromValue = 第一段的 toValue
+    //第四段的 fromValue = 第三段的 toValue
     let yTransationFromValue = dataSource.iconViewLayerYTransationInitialToValue(self)
     let yTransationToValue = dataSource.iconViewLayerYTransationToValue(self)
     let yTransation = makeYTransation(fromValue: yTransationFromValue, toValue: yTransationToValue)
     
     let totalDuration = dataSource.iconViewLayerTotoalDuration(self)
-    let opacityAndInitialDuration = vm.opacityAndInitialDuration
-    if totalDuration < opacityAndInitialDuration {
+    let opacityAndStayTransationAndFirstXYTransationDuration = vm.opacityAndStayTransationAndFirstXYTransationDuration
+    if totalDuration < opacityAndStayTransationAndFirstXYTransationDuration {
       fatalError("🚨 The total duration should larger than initial duration")
     }
     
-    let secondGroupDuration = totalDuration - opacityAndInitialDuration
+    let secondGroupDuration = totalDuration - opacityAndStayTransationAndFirstXYTransationDuration
     return makeGroupAnimation(groupId: id, duration: secondGroupDuration, animations: yTransation)
   }
   
@@ -203,11 +217,12 @@ extension IconViewLayer {
     textLayer.frame = CGRect(x: 0, y: imageLayerHeight, width: width, height: textLayerHeight)
     textLayer.launchDisplayLink()
     
-    if isFirstTimePresented {
-      add(makeOpacityAnimationGroup(groupId: "zeroGroupForFirstTimePresented"), forKey: "zeroGroup")
-    }else {
-      add(makeOpacityAnimationGroup(groupId: "zeroGroupForAlreadyPresented"), forKey: "zeroGroup")
-    }
+    vm.setIsIconLayerFirstPresented(isIconLayerFirstPresented: isFirstTimePresented)
+//    if isFirstTimePresented {
+//      add(makeOpacityAnimationGroup(groupId: "opacityAnimationGroup"), forKey: "zeroGroup")
+//    }else {
+//      add(makeOpacityAnimationGroup(groupId: "zeroGroupForAlreadyPresented"), forKey: "zeroGroup")
+//    }
   }
 }
 
@@ -217,36 +232,37 @@ extension IconViewLayer: CAAnimationDelegate {
   func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
     let groupId = anim.value(forKey: "groupId") as! String
     
-    //給第一次出現的 IconImageLayer 使用
-    if groupId == "zeroGroupForFirstTimePresented" {
-      add(makeXYTransationAndScaleGroup(groupId: "firstGroupForFirstTimePresented", isFirstTimePresented: true), forKey: "firstGroup")
+    if groupId == "opacityAnimationGroup" {
+      if vm.isIconLayerFirstPresented {
+        add(makeStayTransation(groupId: "stayTransationGroupForFirstPresented"), forKey: "stayTransationGroup")
+      }else {
+         add(makeStayTransation(groupId: "stayTransationGroupForAlreadyPresented"), forKey: "stayTransationGroup")
+      }
     }
     
-    if groupId == "firstGroupForFirstTimePresented" {
-      add(makeYTransationGroup(groupId: "secondGroupForFirstTimePresented"), forKey: "secondGroup")
+    //這邊是 icon layer 第一次出現，所要做的動畫
+    if groupId == "stayTransationGroupForFirstPresented" {
+      add(makeXYTransationAndScaleGroup(groupId: "XYTransationAndScaleGroupForFirstTimePresented", isFirstTimePresented: true), forKey: "XYTransationAndScaleGroup")
     }
     
-    if groupId == "secondGroupForFirstTimePresented" {
+    if groupId == "XYTransationAndScaleGroupForFirstTimePresented" {
+      add(makeYTransationGroup(groupId: "YTransationGroupForFirstTimePresented"), forKey: "YTransationGroup")
+    }
+    
+    if groupId == "YTransationGroupForFirstTimePresented" {
       myDelegate?.iconViewLayerDoneAllAnimation(self)
     }
     
-    //給已經出現過的 IconImageLayer 使用
-    if groupId == "zeroGroupForAlreadyPresented" {
-      add(makeXYTransationAndScaleGroup(groupId: "firstGroupForAlreadyPresented", isFirstTimePresented: false), forKey: "firstGroup")
+    //這邊是已經出現過的 icon layer 所要走的動畫
+    if groupId == "stayTransationGroupForAlreadyPresented" {
+      add(makeXYTransationAndScaleGroup(groupId: "XYTransationAndScaleGroupForAlreadyPresented", isFirstTimePresented: false), forKey: "XYTransationAndScaleGroup")
     }
     
-    if groupId == "firstGroupForAlreadyPresented" {
+    if groupId == "stayTransationGroupForAlreadyPresented" {
 //      initializeLayer()
     }
   }
 }
-
-
-
-
-
-
-
 
 extension IconViewLayer: CANumberTextLayerDataSource {
   func animationNumberTextLayerStartValue(_ animationNumberLabel: CANumberTextlayer) -> Int {

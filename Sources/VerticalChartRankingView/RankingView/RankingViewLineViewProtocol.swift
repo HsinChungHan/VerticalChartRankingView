@@ -53,11 +53,11 @@ extension VerticalChartRankingView: LineViewDataSource {
     return drawLineDuration
   }
   
-  func lineViewIconTransationDuration(_ lineView: LineView) -> TimeInterval {
+  func lineViewIconYTransationDuration(_ lineView: LineView) -> TimeInterval {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
-    return dataSource.verticalChartRankingViewLineViewIconTransationDuration(self)
+    return dataSource.verticalChartRankingViewLineViewIconYTransationDuration(self)
   }
   
   func lineViewErasedColor(_ lineView: LineView) -> UIColor {
