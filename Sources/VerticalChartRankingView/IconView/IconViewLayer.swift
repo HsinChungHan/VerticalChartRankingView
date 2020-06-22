@@ -218,11 +218,7 @@ extension IconViewLayer {
     textLayer.launchDisplayLink()
     
     vm.setIsIconLayerFirstPresented(isIconLayerFirstPresented: isFirstTimePresented)
-//    if isFirstTimePresented {
-//      add(makeOpacityAnimationGroup(groupId: "opacityAnimationGroup"), forKey: "zeroGroup")
-//    }else {
-//      add(makeOpacityAnimationGroup(groupId: "zeroGroupForAlreadyPresented"), forKey: "zeroGroup")
-//    }
+    add(makeOpacityAnimationGroup(groupId: "opacityAnimationGroup"), forKey: "opacityAnimationGroup")
   }
 }
 
