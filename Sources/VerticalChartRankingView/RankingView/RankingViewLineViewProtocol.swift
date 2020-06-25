@@ -115,7 +115,11 @@ extension VerticalChartRankingView: LineViewDataSource {
   }
   
   func lineViewTextLayerTextColor(_ lineView: LineView) -> UIColor {
-    return .white
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    let textColor = dataSource.verticalChartRankingViewTextLayerTextColor(self)
+    return textColor
   }
   
   func lineViewTextLayerBackgroundColor(_ lineView: LineView) -> UIColor {
@@ -123,7 +127,11 @@ extension VerticalChartRankingView: LineViewDataSource {
   }
   
   func lineViewTextLayerFontSize(_ lineView: LineView) -> CGFloat {
-    return 22
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    let fontSize = dataSource.verticalChartRankingViewTextLayerFontSize(self)
+    return fontSize
   }
 }
 

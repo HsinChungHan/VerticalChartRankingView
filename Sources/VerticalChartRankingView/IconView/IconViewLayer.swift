@@ -31,6 +31,9 @@ protocol IconViewLayerDataSource: AnyObject {
   func iconViewLayerWidthOfLayer(_ iconViewLayer: IconViewLayer) -> CGFloat
   func iconViewLayerImageLayerHeiht(_ iconViewLayer: IconViewLayer) -> CGFloat
   func iconViewLayerTextLayerHeiht(_ iconViewLayer: IconViewLayer) -> CGFloat
+  
+  func iconViewLayerTextLayerFontSize(_ iconViewLayer: IconViewLayer) -> CGFloat
+  func iconViewLayerTextLayerTextColor(_ iconViewLayer: IconViewLayer) -> UIColor
 }
 
 protocol IconViewLayerDelegate: AnyObject {
@@ -287,7 +290,11 @@ extension IconViewLayer: CANumberTextLayerDataSource {
   }
   
   func animationNumberTextLayerTextColor(_ animationNumberLabel: CANumberTextlayer) -> UIColor {
-    return .white
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for IconView")
+    }
+    let color = dataSource.iconViewLayerTextLayerTextColor(self)
+    return color
   }
   
   func animationNumberTextLayerLabelFont(_ animationNumberLabel: CANumberTextlayer) -> UIFont {
@@ -299,7 +306,9 @@ extension IconViewLayer: CANumberTextLayerDataSource {
       fatalError("🚨 You have to set dataSource for IconView")
     }
     let scale = dataSource.iconViewLayerScaleToValue(self)
-    return 22 / scale
+    let fontSize = dataSource.iconViewLayerTextLayerFontSize(self)
+    return fontSize / scale
+//    return 22 / scale
   }
   
   func animationNumberTextLayerTextAlignment(_ animationNumberLabel: CANumberTextlayer) -> CATextLayerAlignmentMode {

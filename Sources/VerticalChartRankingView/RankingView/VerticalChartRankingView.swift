@@ -44,6 +44,8 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewLineViewColor(_ rankingView: VerticalChartRankingView) -> UIColor
   
+  func verticalChartRankingViewTextLayerFontSize(_ rankingView: VerticalChartRankingView) -> CGFloat
+  func verticalChartRankingViewTextLayerTextColor(_ rankingView: VerticalChartRankingView) -> UIColor
 }
 
 public protocol VerticalChartRankingViewDelegate: AnyObject {
@@ -77,14 +79,7 @@ public class VerticalChartRankingView: UIView {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
-    
-//    let drawLineDuration = dataSource.verticalChartRankingViewDoDrawLineViewDuration(self)
-//    let lineViewIconDuration = dataSource.verticalChartRankingViewLineViewIconTransationDuration(self)
-//    let transationDuration = dataSource.verticalChartRankingViewXTransactionDuration(self)
     let oneRoundDuration = dataSource.verticalChartRankingViewOneRoundDuration(self)
-    //每次做完所有動畫後，再多一秒的停頓
-//    var totalDuration: TimeInterval = 0.0
-//    totalDuration = max(drawLineDuration, lineViewIconDuration, transationDuration)
     
     let timer = Timer.init(timeInterval: oneRoundDuration, target: self, selector: #selector(onTimerFires(sender:)), userInfo: nil, repeats: true)
     return timer

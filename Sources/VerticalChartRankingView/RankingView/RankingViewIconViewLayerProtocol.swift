@@ -9,6 +9,22 @@
 import UIKit
 
 extension VerticalChartRankingView: IconViewLayerDataSource {
+  func iconViewLayerTextLayerFontSize(_ iconViewLayer: IconViewLayer) -> CGFloat {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    let fontSize = dataSource.verticalChartRankingViewTextLayerFontSize(self)
+    return fontSize
+  }
+  
+  func iconViewLayerTextLayerTextColor(_ iconViewLayer: IconViewLayer) -> UIColor {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    let textColor = dataSource.verticalChartRankingViewTextLayerTextColor(self)
+    return textColor
+  }
+  
   func iconViewLayerStayDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
