@@ -258,7 +258,13 @@ extension LineView {
   
   fileprivate func makeLinePath(startedX: CGFloat, viewModel: LineViewModel) -> UIBezierPath {
     let path = UIBezierPath()
-    path.move(to: CGPoint.init(x: startedX, y: viewModel.drawLineFromValue + 1))
+    var drawLineFromValue = viewModel.drawLineFromValue
+    if viewModel.shouldEraseLine {
+      drawLineFromValue -= 1
+    }else {
+      drawLineFromValue += 1
+    }
+    path.move(to: CGPoint.init(x: startedX, y: drawLineFromValue))
     path.addLine(to: CGPoint.init(x: startedX, y: viewModel.drawLineToValue))
     return path
   }
