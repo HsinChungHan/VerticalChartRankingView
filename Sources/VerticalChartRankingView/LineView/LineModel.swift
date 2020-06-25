@@ -11,12 +11,14 @@ import UIKit
 public class LineModel {
   
   private(set) var id: String
+  private(set) var name: String
   private(set) var value: Float
   private(set) var rank: Int = 0
   private(set) var icon: UIImage
   
-  init(id: String, value: Float, icon: UIImage) {
+  init(id: String, name: String, value: Float, icon: UIImage) {
     self.id = id
+    self.name = name
     self.value = value
     self.icon = icon
   }

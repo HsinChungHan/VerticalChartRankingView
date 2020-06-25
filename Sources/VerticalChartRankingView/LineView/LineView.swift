@@ -56,7 +56,7 @@ class LineView: UIView {
   weak var dataSource: LineViewDataSource?
   weak var delegate: LineViewDelegate?
   lazy var viewModel = makeViewModel()
-  lazy var idLabel = makeLabel(id: viewModel.id)
+  lazy var idLabel = makeLabel(name: viewModel.name)
   lazy var imageLayer = makeImageLayer(image: viewModel.icon)
   lazy var textLayer = makeTextLayer()
   lazy var overallLayer = makeOverallLayer()
@@ -117,7 +117,7 @@ extension LineView {
 
 extension LineView {
   
-  fileprivate func makeLabel(id: String) -> UILabel {
+  fileprivate func makeLabel(name: String) -> UILabel {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set max num for LineView's dataSource")
     }
@@ -129,7 +129,7 @@ extension LineView {
     label.backgroundColor = backGroundColor
     label.textColor = textColor
     label.font = font
-    label.text = id
+    label.text = name
     if isSizeToFit {
       label.adjustsFontSizeToFitWidth = true
     }else {

@@ -34,7 +34,7 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   
   func verticalChartRankingViewNumberOfPresentedViews(_ rankingView: VerticalChartRankingView) -> Int
   func verticalChartRankingViewPadding(_ rankingView: VerticalChartRankingView) -> CGFloat
-  func verticalChartRankingViewLineModels(_ rankingView: VerticalChartRankingView) -> [(id: String, value: Float, icon: String, description: String)]
+  func verticalChartRankingViewLineModels(_ rankingView: VerticalChartRankingView) -> [(id: String, name: String, value: Float, icon: String, description: String)]
   
   func verticalChartRankingViewLineViewHeightScale(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewLineViewHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
@@ -191,7 +191,7 @@ public class VerticalChartRankingView: UIView {
     let lineModelTuples = dataSource.verticalChartRankingViewLineModels(self)
     var lineModels = [LineModel]()
     for tuple in lineModelTuples {
-      let lineModel = LineModel(id: tuple.id, value: tuple.value, icon: UIImage(named: tuple.icon)!)
+      let lineModel = LineModel(id: tuple.id, name: tuple.name, value: tuple.value, icon: UIImage(named: tuple.icon)!)
       lineModels.append(lineModel)
     }
     layoutIfNeeded()
