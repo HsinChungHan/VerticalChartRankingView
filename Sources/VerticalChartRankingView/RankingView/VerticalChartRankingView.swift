@@ -34,7 +34,7 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   
   func verticalChartRankingViewNumberOfPresentedViews(_ rankingView: VerticalChartRankingView) -> Int
   func verticalChartRankingViewPadding(_ rankingView: VerticalChartRankingView) -> CGFloat
-  func verticalChartRankingViewLineModels(_ rankingView: VerticalChartRankingView) -> [(id: String, name: String, value: Float, icon: String, description: String)]
+  func verticalChartRankingViewLineModels(_ rankingView: VerticalChartRankingView) -> [(id: String, name: String, value: Float, icon: String, channelImage: String, description: String)]
   
   func verticalChartRankingViewLineViewHeightScale(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewLineViewHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
@@ -43,6 +43,7 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewIconViewLayerScaleXToValue(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewLineViewColor(_ rankingView: VerticalChartRankingView) -> UIColor
+  func verticalChartRankingViewLineViewShouldUseIDLabel(_ rankingView: VerticalChartRankingView) -> Bool
   
   func verticalChartRankingViewTextLayerFontSize(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewTextLayerTextColor(_ rankingView: VerticalChartRankingView) -> UIColor
@@ -191,7 +192,7 @@ public class VerticalChartRankingView: UIView {
     let lineModelTuples = dataSource.verticalChartRankingViewLineModels(self)
     var lineModels = [LineModel]()
     for tuple in lineModelTuples {
-      let lineModel = LineModel(id: tuple.id, name: tuple.name, value: tuple.value, icon: UIImage(named: tuple.icon)!)
+      let lineModel = LineModel(id: tuple.id, name: tuple.name, value: tuple.value, icon: UIImage(named: tuple.icon)!, channelImage: UIImage(named: tuple.channelImage)!)
       lineModels.append(lineModel)
     }
     layoutIfNeeded()

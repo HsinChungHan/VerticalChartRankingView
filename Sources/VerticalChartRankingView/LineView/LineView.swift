@@ -41,6 +41,8 @@ protocol LineViewDataSource: AnyObject {
   func lineViewIDLabelTextColor(_ lineView: LineView) -> UIColor
   func lineViewIDLabelFont(_ lineView: LineView) -> UIFont
   func lineViewIDLabelIsSizeToFit(_ lineView: LineView) -> Bool
+  
+  func lineViewShouldUseIDLabel(_ lineView: LineView) -> Bool
 }
 
 
@@ -57,6 +59,7 @@ class LineView: UIView {
   weak var delegate: LineViewDelegate?
   lazy var viewModel = makeViewModel()
   lazy var idLabel = makeLabel(name: viewModel.name)
+  lazy var channelImageView = makeImageView(imageName: "")
   lazy var imageLayer = makeImageLayer(image: viewModel.icon)
   lazy var textLayer = makeTextLayer()
   lazy var overallLayer = makeOverallLayer()
@@ -139,6 +142,14 @@ extension LineView {
     return label
   }
   
+  fileprivate func makeImageView(imageName: String) -> UIImageView {
+    let imgView = UIImageView()
+    imgView.image = UIImage(named: imageName)
+    imgView.contentMode = .scaleAspectFill
+    imgView.clipsToBounds = true
+    return imgView
+  }
+  
   fileprivate func makeViewModel() -> LineViewModel {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set max num for LineView's dataSource")
@@ -154,8 +165,20 @@ extension LineView {
   }
   
   fileprivate func setupLayout() {
-    addSubview(idLabel)
-    idLabel.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .zero, size: .init(width: 0, height: 80))
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for LineView first")
+    }
+    let shouldUseIDLabel = dataSource.lineViewShouldUseIDLabel(self)
+    
+    if shouldUseIDLabel {
+      addSubview(idLabel)
+      idLabel.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .zero, size: .init(width: 0, height: 80))
+    }else {
+      addSubview(channelImageView)
+      channelImageView.anchor(top: topAnchor, bottom: nil, leading: nil, trailing: nil, padding: .init(top: 10, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 80))
+      channelImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+      channelImageView.layer.cornerRadius = 40.0
+    }
   }
 }
 

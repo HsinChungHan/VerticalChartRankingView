@@ -57,7 +57,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
   
   func iconViewLayerLineModel(_ iconViewLayer: IconViewLayer) -> LineModel {
     //TODO: - 要去寫 LineModel == nil 的情況
-    return viewModel.currentLineModel ?? LineModel(id: "QQQ", name: "GGG", value: 0, icon: UIImage())
+    return viewModel.currentLineModel ?? LineModel(id: "QQQ", name: "GGG", value: 0, icon: UIImage(), channelImage: UIImage())
   }
   
   func iconViewLayerXTransationToValue(_ iconViewLayer: IconViewLayer) -> CGFloat {

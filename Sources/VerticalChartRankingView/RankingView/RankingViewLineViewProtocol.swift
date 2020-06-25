@@ -9,6 +9,13 @@
 import UIKit
 
 extension VerticalChartRankingView: LineViewDataSource {
+  func lineViewShouldUseIDLabel(_ lineView: LineView) -> Bool {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    return dataSource.verticalChartRankingViewLineViewShouldUseIDLabel(self)
+  }
+  
   func lineViewTextLayerFont(_ lineView: LineView) -> UIFont {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
@@ -119,7 +126,7 @@ extension VerticalChartRankingView: LineViewDataSource {
   
   func lineViewLineModel(_ lineView: LineView) -> LineModel {
     //TODO: - 要去寫 LineModel == nil 的情況
-    return viewModel.currentLineModel ?? LineModel(id: "QQQ", name: "GGG", value: 0, icon: UIImage())
+    return viewModel.currentLineModel ?? LineModel(id: "QQQ", name: "GGG", value: 0, icon: UIImage(), channelImage: UIImage())
   }
   
   func lineViewTextLayerTextColor(_ lineView: LineView) -> UIColor {

@@ -10,17 +10,19 @@ import UIKit
 
 public class LineModel {
   
-  private(set) var id: String
-  private(set) var name: String
+  let id: String
+  let name: String
   private(set) var value: Float
   private(set) var rank: Int = 0
-  private(set) var icon: UIImage
+  let icon: UIImage
+  let channelImage: UIImage
   
-  init(id: String, name: String, value: Float, icon: UIImage) {
+  init(id: String, name: String, value: Float, icon: UIImage, channelImage: UIImage) {
     self.id = id
     self.name = name
     self.value = value
     self.icon = icon
+    self.channelImage = channelImage
   }
   
   func setRank(_ rank: Int) {

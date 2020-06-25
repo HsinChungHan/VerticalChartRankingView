@@ -16,6 +16,8 @@ class LineViewModel {
     return lineModel.id
   }
   
+  
+  
   var name: String {
     return lineModel.name
   }
