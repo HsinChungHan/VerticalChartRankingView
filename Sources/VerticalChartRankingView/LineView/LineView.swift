@@ -59,7 +59,7 @@ class LineView: UIView {
   weak var delegate: LineViewDelegate?
   lazy var viewModel = makeViewModel()
   lazy var idLabel = makeLabel(name: viewModel.name)
-  lazy var channelImageView = makeImageView(imageName: "")
+  lazy var channelImageView = makeImageView(image: viewModel.channelImage)
   lazy var imageLayer = makeImageLayer(image: viewModel.icon)
   lazy var textLayer = makeTextLayer()
   lazy var overallLayer = makeOverallLayer()
@@ -142,9 +142,9 @@ extension LineView {
     return label
   }
   
-  fileprivate func makeImageView(imageName: String) -> UIImageView {
+  fileprivate func makeImageView(image: UIImage) -> UIImageView {
     let imgView = UIImageView()
-    imgView.image = UIImage(named: imageName)
+    imgView.image = image
     imgView.contentMode = .scaleAspectFill
     imgView.clipsToBounds = true
     return imgView

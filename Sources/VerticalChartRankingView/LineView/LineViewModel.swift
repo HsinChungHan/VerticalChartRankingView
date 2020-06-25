@@ -16,14 +16,16 @@ class LineViewModel {
     return lineModel.id
   }
   
-  
-  
   var name: String {
     return lineModel.name
   }
   
   var icon: UIImage {
     return lineModel.icon
+  }
+  
+  var channelImage: UIImage {
+    return lineModel.channelImage
   }
   
   var value: Float {
