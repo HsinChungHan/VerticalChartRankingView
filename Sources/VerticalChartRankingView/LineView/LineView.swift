@@ -147,7 +147,7 @@ extension LineView {
     imgView.image = image
     imgView.contentMode = .scaleAspectFill
     imgView.clipsToBounds = true
-    imgView.layer.borderColor = UIColor.white
+    imgView.layer.borderColor = UIColor.white.cgColor
     imgView.layer.borderWidth = 5.0
     return imgView
   }
