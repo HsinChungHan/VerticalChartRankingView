@@ -35,7 +35,8 @@ protocol IconViewLayerDataSource: AnyObject {
   func iconViewLayerTextLayerFontSize(_ iconViewLayer: IconViewLayer) -> CGFloat
   func iconViewLayerTextLayerTextColor(_ iconViewLayer: IconViewLayer) -> UIColor
   func iconViewLayerTextLayerFont(_ iconViewLayer: IconViewLayer) -> UIFont
-  func iconViewLayerBackgroundColor(_ iconViewLayer: IconViewLayer) -> UIColor
+  func iconViewLayerImageLayerBackgroundColor(_ iconViewLayer: IconViewLayer) -> UIColor
+  func iconViewLayerTextLayerBackgroundColor(_ iconViewLayer: IconViewLayer) -> UIColor
 }
 
 protocol IconViewLayerDelegate: AnyObject {
@@ -72,21 +73,30 @@ extension IconViewLayer {
   }
   
   fileprivate func makeImageLayer() -> CALayer {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for IconViewLayer")
+    }
+    let bgColor = dataSource.iconViewLayerImageLayerBackgroundColor(self).cgColor
     let layer = CALayer()
     layoutIfNeeded()
     layer.frame = bounds
     layer.contents = vm.icon.cgImage
     layer.contentsGravity = .resizeAspect
-    layer.backgroundColor = UIColor.clear.cgColor
+    layer.backgroundColor = bgColor
     layer.isGeometryFlipped = true
     return layer
   }
   
   fileprivate func makeTextLayer() -> CANumberTextlayer {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for IconViewLayer")
+    }
+    let bgColor = dataSource.iconViewLayerTextLayerBackgroundColor(self).cgColor
     let layer = CANumberTextlayer()
     layer.dataSource = self
     layer.setLayerProperties()
     layer.alignmentMode = .center
+    layer.backgroundColor = bgColor
     return layer
   }
   
@@ -200,10 +210,6 @@ extension IconViewLayer {
   }
   
   func initializeLayer() {
-    guard let dataSource = dataSource else {
-      fatalError("🚨 You have to set dataSource for IconViewLayer")
-    }
-    backgroundColor = dataSource.iconViewLayerBackgroundColor(self).cgColor
     removeFromSuperlayer()
     sublayers?.removeAll()
     removeAllAnimations()

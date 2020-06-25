@@ -48,7 +48,8 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewTextLayerFontSize(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewTextLayerTextColor(_ rankingView: VerticalChartRankingView) -> UIColor
   func verticalChartRankingViewTextLayerFont(_ rankingView: VerticalChartRankingView) -> UIFont
-  func verticalChartRankingViewIconViewLayerBackgroundColor(_ rankingView: VerticalChartRankingView) -> UIColor
+  func verticalChartRankingViewIconViewLayerImageLayerBackgroundColor(_ rankingView: VerticalChartRankingView) -> UIColor
+  func verticalChartRankingViewIconViewLayerTextLayerBackgroundColor(_ rankingView: VerticalChartRankingView) -> UIColor
 }
 
 public protocol VerticalChartRankingViewDelegate: AnyObject {
