@@ -35,6 +35,7 @@ protocol IconViewLayerDataSource: AnyObject {
   func iconViewLayerTextLayerFontSize(_ iconViewLayer: IconViewLayer) -> CGFloat
   func iconViewLayerTextLayerTextColor(_ iconViewLayer: IconViewLayer) -> UIColor
   func iconViewLayerTextLayerFont(_ iconViewLayer: IconViewLayer) -> UIFont
+  func iconViewLayerTextBackgroundColor(_ iconViewLayer: IconViewLayer) -> UIFont
 }
 
 protocol IconViewLayerDelegate: AnyObject {
@@ -199,6 +200,10 @@ extension IconViewLayer {
   }
   
   func initializeLayer() {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for IconViewLayer")
+    }
+    backgroundColor = dataSource.iconViewLayerTextBackgroundColor(self)
     removeFromSuperlayer()
     sublayers?.removeAll()
     removeAllAnimations()
@@ -206,7 +211,7 @@ extension IconViewLayer {
   
   func launchAnimation(isFirstTimePresented: Bool) {
     guard let dataSource = dataSource else {
-      fatalError("🚨 You have to set dataSource for IconView")
+      fatalError("🚨 You have to set dataSource for IconViewLayer")
     }
 
     let width = dataSource.iconViewLayerWidthOfLayer(self)
