@@ -36,7 +36,7 @@ class VeritcalChartRankingViewVM {
   }
   
   var imageLayerHeight: CGFloat {
-    return lineViewWidth * 1.5
+    return lineViewWidth
   }
   
   var currentLineView: LineView? {
