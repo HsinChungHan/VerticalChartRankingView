@@ -35,6 +35,7 @@ protocol LineViewDataSource: AnyObject {
   func lineViewTextLayerTextColor(_ lineView: LineView) -> UIColor
   func lineViewTextLayerBackgroundColor(_ lineView: LineView) -> UIColor
   func lineViewTextLayerFontSize(_ lineView: LineView) -> CGFloat
+  func lineViewTextLayerFont(_ lineView: LineView) -> UIFont
   
   func lineViewIDLabelBackgroundColor(_ lineView: LineView) -> UIColor
   func lineViewIDLabelTextColor(_ lineView: LineView) -> UIColor
@@ -326,7 +327,11 @@ extension LineView: CANumberTextLayerDataSource {
   }
   
   func animationNumberTextLayerLabelFont(_ animationNumberLabel: CANumberTextlayer) -> UIFont {
-    return UIFont.systemFont(ofSize: 0.0, weight: .light)
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set max num for LineView's dataSource")
+    }
+    let font = dataSource.lineViewTextLayerFont(self)
+    return font
   }
   
   func animationNumberTextLayerLabelFontSize(_ animationNumberLabel: CANumberTextlayer) -> CGFloat {

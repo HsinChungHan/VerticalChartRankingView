@@ -9,6 +9,14 @@
 import UIKit
 
 extension VerticalChartRankingView: LineViewDataSource {
+  func lineViewTextLayerFont(_ lineView: LineView) -> UIFont {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    let font = dataSource.verticalChartRankingViewTextLayerFont(self)
+    return font
+  }
+  
   func lineViewIDLabelBackgroundColor(_ lineView: LineView) -> UIColor {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
