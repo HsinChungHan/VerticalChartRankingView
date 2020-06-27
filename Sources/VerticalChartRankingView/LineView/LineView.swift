@@ -191,26 +191,8 @@ extension LineView {
       fatalError("🚨 You have to set max num for LineView's dataSource")
     }
     let width = dataSource.lineViewWidth(self)
-//    let strokeColor = viewModel.strokeColor.withAlphaComponent(0.4)
     
-    var strokeColor = UIColor()
-    
-    if viewModel.value < 100000 {
-      strokeColor = Color.Salmon.v10
-    } else if viewModel.value < 300000 {
-      strokeColor = Color.Salmon.v50
-    }else if viewModel.value < 500000 {
-      strokeColor = Color.Salmon.v100
-    } else if viewModel.value < 700000 {
-      strokeColor = Color.Salmon.v200
-    } else if viewModel.value < 900000 {
-      strokeColor = Color.Salmon.v300
-    }else if viewModel.value < 1100000 {
-      strokeColor = Color.Salmon.v400
-    } else {
-      strokeColor = Color.Red.v300
-    }
-    
+    let strokeColor = Color.getLineColor(value: viewModel.value)
     let erasedColor = dataSource.lineViewErasedColor(self)
     let lineLayer = CAShapeLayer()
     

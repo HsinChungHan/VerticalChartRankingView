@@ -37,25 +37,6 @@ struct Color {
     static let v400 = #colorLiteral(red: 0.09411764706, green: 0.3215686275, blue: 0.6235294118, alpha: 1) // 18529F
   }
   
-  struct Salmon {
-    static let v0 =   #colorLiteral(red: 0.9921568627, green: 0.9254901961, blue: 0.9215686275, alpha: 1) // FDECEB
-    static let v10 =  #colorLiteral(red: 0.9607843137, green: 0.7019607843, blue: 0.6823529412, alpha: 1) // F5B3AE
-    static let v50 =  #colorLiteral(red: 0.914524472, green: 0.5176470588, blue: 0.5146235185, alpha: 1) // EE847D
-    static let v100 = #colorLiteral(red: 0.9450980392, green: 0.4235294118, blue: 0.3647058824, alpha: 1) // F16C5D
-    static let v200 = #colorLiteral(red: 0.8980392157, green: 0.3764705882, blue: 0.3176470588, alpha: 1) // E56051
-    static let v300 = #colorLiteral(red: 0.8549019608, green: 0.337254902, blue: 0.2823529412, alpha: 1) // DA5648
-    static let v400 = #colorLiteral(red: 0.7044988501, green: 0.2274509804, blue: 0.6131530352, alpha: 1) // B83A3A
-  }
-  
-  struct Red {
-    static let v0 =   #colorLiteral(red: 1, green: 0.9137254902, blue: 0.9254901961, alpha: 1) // FFE9EC
-    static let v10 =  #colorLiteral(red: 1, green: 0.6196078431, blue: 0.6666666667, alpha: 1) // FF9EAA
-    static let v50 =  #colorLiteral(red: 0.9725490196, green: 0.3803921569, blue: 0.4509803922, alpha: 1) // F86173
-    static let v100 = #colorLiteral(red: 0.9019607843, green: 0.2, blue: 0.2862745098, alpha: 1) // E63349
-    static let v200 = #colorLiteral(red: 0.8431372549, green: 0.1294117647, blue: 0.2117647059, alpha: 1) // D72136
-    static let v300 = #colorLiteral(red: 0.768627451, green: 0.07843137255, blue: 0.1568627451, alpha: 1) // C83A4C
-  }
-  
   struct Green {
     static let v0 =   #colorLiteral(red: 0.8980392157, green: 0.968627451, blue: 0.9568627451, alpha: 1) // E5F7F4
     static let v10 =  #colorLiteral(red: 0.5960784314, green: 0.8666666667, blue: 0.8235294118, alpha: 1) // 98DDD2
@@ -77,6 +58,44 @@ struct Color {
     static let v300 = #colorLiteral(red: 0.937254902, green: 0.6823529412, blue: 0.03529411765, alpha: 1) // EFAE09
   }
   
+  struct Salmon {
+    static let v0 =   #colorLiteral(red: 0.9921568627, green: 0.9254901961, blue: 0.9215686275, alpha: 1) // FDECEB
+    static let v10 =  #colorLiteral(red: 0.9607843137, green: 0.7019607843, blue: 0.6823529412, alpha: 1) // F5B3AE
+    static let v50 =  #colorLiteral(red: 0.914524472, green: 0.5176470588, blue: 0.5146235185, alpha: 1) // EE847D
+    static let v100 = #colorLiteral(red: 0.9450980392, green: 0.4235294118, blue: 0.3647058824, alpha: 1) // F16C5D
+    static let v200 = #colorLiteral(red: 0.8980392157, green: 0.3764705882, blue: 0.3176470588, alpha: 1) // E56051
+    static let v300 = #colorLiteral(red: 0.8549019608, green: 0.337254902, blue: 0.2823529412, alpha: 1) // DA5648
+  }
+  
+  struct MyPink {
+    static let v0 =   #colorLiteral(red: 0.9921568627, green: 0.9254901961, blue: 0.9215686275, alpha: 1) // FDECEB
+    static let v10 =  #colorLiteral(red: 0.8325736973, green: 0.5819242294, blue: 0.6823529412, alpha: 1) // DA63AE
+    static let v50 = #colorLiteral(red: 0.8549019608, green: 0.5, blue: 0.6723197648, alpha: 1) // DA2CAE
+    static let v100 = #colorLiteral(red: 0.8666666667, green: 0.3827322346, blue: 0.6823529412, alpha: 1) // DD0FAE
+    static let v200 = #colorLiteral(red: 0.8666666667, green: 0.2609696062, blue: 0.6823529412, alpha: 1) // DD0FAE
+    static let v300 = #colorLiteral(red: 0.8666666667, green: 0, blue: 0.6823529412, alpha: 1) // DD0FAE
+  }
+  
+  struct Purple {
+    static let v0 =   #colorLiteral(red: 0.9921568627, green: 0.9254901961, blue: 0.9215686275, alpha: 1) // FDECEB
+    static let v10 =  #colorLiteral(red: 0.5568627451, green: 0.6196078431, blue: 0.968627451, alpha: 1) // 8E9EF7
+    static let v50 =  #colorLiteral(red: 0.5568627451, green: 0.4980392157, blue: 0.968627451, alpha: 1) // 8E7FF7
+    static let v100 =  #colorLiteral(red: 0.5568627451, green: 0.3725490196, blue: 0.968627451, alpha: 1) // 8E5FF7
+    static let v200 =  #colorLiteral(red: 0.5641855736, green: 0.2085418135, blue: 0.968627451, alpha: 1) // 8E1BF7
+    static let v300 =  #colorLiteral(red: 0.6156862745, green: 0, blue: 1, alpha: 1) // 9D00FF
+  }
+  
+  struct Red {
+    static let v0 =   #colorLiteral(red: 1, green: 0.9137254902, blue: 0.9254901961, alpha: 1) // FFE9EC
+    static let v10 =  #colorLiteral(red: 0.3098039329, green: 0.01568627544, blue: 0.1294117719, alpha: 1) // F86173
+    static let v50 = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1) // C83A4C
+    static let v100 = #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1) // C83A4C
+    static let v200 = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1) // C83A4C
+    static let v300 =  #colorLiteral(red: 0.8301583904, green: 0, blue: 0, alpha: 1) // FF9EAA
+  }
+  
+  
+  
   // Lagacy color system
   struct Pink {
     static let v100 = #colorLiteral(red: 0.9607843137, green: 0.3294117647, blue: 0.5490196078, alpha: 1) // 0xF5548C
@@ -87,6 +106,61 @@ struct Color {
     static let v100 = #colorLiteral(red: 0.7098039216, green: 0.7176470588, blue: 0.7254901961, alpha: 1) // 0x#B5B7B9
     static let v300 = #colorLiteral(red: 0.5137254902, green: 0.568627451, blue: 0.5882352941, alpha: 1) // 0x839196
     static let main = #colorLiteral(red: 0.4235294118, green: 0.4549019608, blue: 0.4901960784, alpha: 1) // 0x6C747D
+  }
+  
+  static func getLineColor(value: Float) -> UIColor {
+    switch value {
+      case 0 ..< 100000:
+        return Green.v10
+      case 100000 ..< 200000:
+        return Green.v50
+      case 200000 ..< 300000:
+        return Green.v100
+      case 300000 ..< 400000:
+        return Green.v200
+      case 400000 ..< 500000:
+        return Green.v300
+      case 500000 ..< 600000:
+        return Yellow.v10
+      case 600000 ..< 700000:
+        return Yellow.v50
+      case 700000 ..< 800000:
+        return Yellow.v100
+      case 800000 ..< 900000:
+        return Yellow.v200
+      case 900000 ..< 1000000:
+        return Yellow.v300
+      case 1000000 ..< 1100000:
+        return MyPink.v10
+      case 1100000 ..< 1200000:
+        return MyPink.v50
+      case 1200000 ..< 1300000:
+        return MyPink.v100
+      case 1300000 ..< 1400000:
+        return MyPink.v200
+      case 1400000 ..< 1500000:
+        return MyPink.v300
+      case 1500000 ..< 1600000:
+        return Purple.v10
+      case 1600000 ..< 1700000:
+        return Purple.v50
+      case 1700000 ..< 1800000:
+        return Purple.v100
+      case 1800000 ..< 1900000:
+        return Purple.v200
+      case 900000 ..< 2000000:
+        return Purple.v300
+      case 2000000 ..< 2100000:
+        return Red.v10
+      case 2100000 ..< 2200000:
+        return Red.v50
+      case 2200000 ..< 2300000:
+        return Red.v100
+      case 2300000 ..< 2400000:
+        return Red.v200
+      default:
+        return Red.v300
+    }
   }
   
   
@@ -106,11 +180,11 @@ enum Theme {
   func getThemeColor() -> ThemeColor {
     switch self {
       case .Default:
-      	return ThemeColor(verticalRankingViewBgColor: Color.Green.v400, circleRankingBgColor: Color.Green.v500, titleViewRankingBgColor: Color.Green.v600)
+        return ThemeColor(verticalRankingViewBgColor: Color.Green.v400, circleRankingBgColor: Color.Green.v500, titleViewRankingBgColor: Color.Green.v600)
       case .NBA:
-      		return ThemeColor(verticalRankingViewBgColor: Color.Blue.v400, circleRankingBgColor: Color.Salmon.v400, titleViewRankingBgColor: Color.Green.v400)
+        return ThemeColor(verticalRankingViewBgColor: Color.Blue.v400, circleRankingBgColor: Color.Salmon.v300, titleViewRankingBgColor: Color.Green.v400)
       case .AnimalCrossing:
-      		return ThemeColor(verticalRankingViewBgColor: Color.Green.v200, circleRankingBgColor: Color.Salmon.v400, titleViewRankingBgColor: Color.Green.v400)
+        return ThemeColor(verticalRankingViewBgColor: Color.Green.v200, circleRankingBgColor: Color.Salmon.v300, titleViewRankingBgColor: Color.Green.v400)
     }
   }
 }
