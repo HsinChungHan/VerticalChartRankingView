@@ -42,7 +42,7 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewIconViewLayerScaleToValue(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewIconViewLayerScaleXToValue(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
-  func verticalChartRankingViewLineViewColor(_ rankingView: VerticalChartRankingView) -> UIColor
+  func verticalChartRankingViewLineViewColor(_ rankingView: VerticalChartRankingView, value: Float) -> UIColor
   func verticalChartRankingViewLineViewShouldUseIDLabel(_ rankingView: VerticalChartRankingView) -> Bool
   
   func verticalChartRankingViewTextLayerFontSize(_ rankingView: VerticalChartRankingView) -> CGFloat

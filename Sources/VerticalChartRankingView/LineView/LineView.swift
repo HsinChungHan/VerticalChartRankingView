@@ -21,7 +21,7 @@ protocol LineViewDataSource: AnyObject {
   func lineViewIconYTransationDuration(_ lineView: LineView) -> TimeInterval
   
   func lineViewErasedColor(_ lineView: LineView) -> UIColor
-  func lineViewStrokeColor(_ lineView: LineView) -> UIColor
+  func lineViewStrokeColor(_ lineView: LineView, value: Float) -> UIColor
   
   func lineViewWidth(_ lineView: LineView) -> CGFloat
   func lineViewHeight(_ lineView: LineView) -> CGFloat
@@ -161,7 +161,7 @@ extension LineView {
     let height = dataSource.lineViewHeight(self)
     let maxY = dataSource.lineViewMaxY(self)
     let lineViewHeightScale = dataSource.lineViewHeightScale(self)
-    let strokeColor = dataSource.lineViewStrokeColor(self)
+    let strokeColor = dataSource.lineViewStrokeColor(self, value: viewModel.lineModel.value)
     
     return LineViewModel(lineModel: lineModel, rankingViewMaxValue: maxValue, lineViewHeight: height, maxY: maxY, lineViewHeightScale: lineViewHeightScale, strokeColor: strokeColor)
   }
