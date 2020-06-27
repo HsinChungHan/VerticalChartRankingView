@@ -21,7 +21,6 @@ protocol LineViewDataSource: AnyObject {
   func lineViewIconYTransationDuration(_ lineView: LineView) -> TimeInterval
   
   func lineViewErasedColor(_ lineView: LineView) -> UIColor
-  func lineViewStrokeColor(_ lineView: LineView, value: Float) -> UIColor
   
   func lineViewWidth(_ lineView: LineView) -> CGFloat
   func lineViewHeight(_ lineView: LineView) -> CGFloat
@@ -161,9 +160,8 @@ extension LineView {
     let height = dataSource.lineViewHeight(self)
     let maxY = dataSource.lineViewMaxY(self)
     let lineViewHeightScale = dataSource.lineViewHeightScale(self)
-    let strokeColor = dataSource.lineViewStrokeColor(self, value: viewModel.lineModel.value)
     
-    return LineViewModel(lineModel: lineModel, rankingViewMaxValue: maxValue, lineViewHeight: height, maxY: maxY, lineViewHeightScale: lineViewHeightScale, strokeColor: strokeColor)
+    return LineViewModel(lineModel: lineModel, rankingViewMaxValue: maxValue, lineViewHeight: height, maxY: maxY, lineViewHeightScale: lineViewHeightScale)
   }
   
   fileprivate func setupLayout() {
@@ -194,7 +192,25 @@ extension LineView {
     }
     let width = dataSource.lineViewWidth(self)
 //    let strokeColor = viewModel.strokeColor.withAlphaComponent(0.4)
-    let strokeColor = viewModel.strokeColor
+    
+    var strokeColor = UIColor()
+    
+    if viewModel.value < 100000 {
+      strokeColor = Color.Salmon.v10
+    } else if viewModel.value < 300000 {
+      strokeColor = Color.Salmon.v50
+    }else if viewModel.value < 500000 {
+      strokeColor = Color.Salmon.v100
+    } else if viewModel.value < 700000 {
+      strokeColor = Color.Salmon.v200
+    } else if viewModel.value < 900000 {
+      strokeColor = Color.Salmon.v300
+    }else if viewModel.value < 1100000 {
+      strokeColor = Color.Salmon.v400
+    } else {
+      strokeColor = Color.Red.v300
+    }
+    
     let erasedColor = dataSource.lineViewErasedColor(self)
     let lineLayer = CAShapeLayer()
     

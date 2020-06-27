@@ -44,7 +44,6 @@ class LineViewModel {
   let lineViewHeight: CGFloat
   let lineViewMaxY: CGFloat
   let lineViewHeightScale: CGFloat
-  let strokeColor: UIColor
   
   var drawLineToValue: CGFloat {
     let calculator = Calculator()
@@ -55,7 +54,7 @@ class LineViewModel {
     return drawLineToValue > drawLineFromValue
   }
     
-  init(lineModel model: LineModel, rankingViewMaxValue: Float, lineViewHeight: CGFloat, maxY: CGFloat, lineViewHeightScale: CGFloat, strokeColor: UIColor) {
+  init(lineModel model: LineModel, rankingViewMaxValue: Float, lineViewHeight: CGFloat, maxY: CGFloat, lineViewHeightScale: CGFloat) {
     self.lineModel = model
     self.rankingViewMaxValue = rankingViewMaxValue
     self.lineViewHeight = lineViewHeight
@@ -63,7 +62,6 @@ class LineViewModel {
     lineViewMaxY = maxY
     self.lineViewHeightScale = lineViewHeightScale
     rank = lineModel.rank
-    self.strokeColor = strokeColor
   }
   
   func setNextRoundTransationFromValue(_ value: CGFloat) {
