@@ -170,13 +170,14 @@ extension LineView {
       fatalError("🚨 You have to set dataSource for LineView first")
     }
     let shouldUseIDLabel = dataSource.lineViewShouldUseIDLabel(self)
+    let channelImageViewWidth = dataSource.lineViewWidth(self) - 10
     
     if shouldUseIDLabel {
       addSubview(idLabel)
       idLabel.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .zero, size: .init(width: 0, height: 80))
     }else {
       addSubview(channelImageView)
-      channelImageView.anchor(top: topAnchor, bottom: nil, leading: nil, trailing: nil, padding: .init(top: 10, left: 0, bottom: 0, right: 0), size: .init(width: 80, height: 80))
+      channelImageView.anchor(top: topAnchor, bottom: nil, leading: nil, trailing: nil, padding: .init(top: 10, left: 0, bottom: 0, right: 0), size: .init(width: channelImageViewWidth, height: channelImageViewWidth))
       channelImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
       channelImageView.layer.cornerRadius = 40.0
     }
