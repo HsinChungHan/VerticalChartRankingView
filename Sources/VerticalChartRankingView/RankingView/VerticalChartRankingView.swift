@@ -19,7 +19,6 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewLineViewIDLabelTextColor(_ rankingView: VerticalChartRankingView) -> UIColor
   func verticalChartRankingViewLineViewIDLabelFont(_ rankingView: VerticalChartRankingView) -> UIFont
   func verticalChartRankingViewLineViewIDLabelIsSizeToFit(_ rankingView: VerticalChartRankingView) -> Bool
-  func verticalChartRankingViewLineViewStrokeColor(_ rankingView: VerticalChartRankingView) -> UIColor
   
   func verticalChartRankingViewOneRoundDuration(_ rankingView: VerticalChartRankingView) -> TimeInterval
   

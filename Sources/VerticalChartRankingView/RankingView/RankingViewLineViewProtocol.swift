@@ -13,7 +13,7 @@ extension VerticalChartRankingView: LineViewDataSource {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
-    return dataSource.verticalChartRankingViewLineViewStrokeColor(self)
+    return Color.getPinkLineView(currentLineCount: viewModel.presentedLineViews.count)
   }
   
   
