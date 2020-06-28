@@ -39,7 +39,7 @@ struct Color {
   
   struct Green {
     static let v0 =   #colorLiteral(red: 0.8980392157, green: 0.968627451, blue: 0.9568627451, alpha: 1) // E5F7F4
-    static let v10 =  #colorLiteral(red: 0.5960784314, green: 0.8666666667, blue: 0.8235294118, alpha: 1) // 98DDD2
+    static let v10 =  #colorLiteral(red: 0.628024065, green: 0.8666666667, blue: 0.8235294118, alpha: 1) // 98DDD2
     static let v50 =  #colorLiteral(red: 0.3254901961, green: 0.7764705882, blue: 0.7058823529, alpha: 1) // 53C6B4
     static let v100 = #colorLiteral(red: 0.1882352941, green: 0.7333333333, blue: 0.6470588235, alpha: 1) // 30BBA5
     static let v200 = #colorLiteral(red: 0.1725490196, green: 0.6745098039, blue: 0.5921568627, alpha: 1) // 2CAC97
@@ -51,7 +51,7 @@ struct Color {
   
   struct Yellow {
     static let v0 =   #colorLiteral(red: 0.9960784314, green: 0.9725490196, blue: 0.9176470588, alpha: 1) // FEF8EA
-    static let v10 =  #colorLiteral(red: 1, green: 0.9294117647, blue: 0.6862745098, alpha: 1) // FFEDAF
+    static let v10 =  #colorLiteral(red: 1, green: 0.8951116791, blue: 0.7837434738, alpha: 1) // FFEDAF
     static let v50 =  #colorLiteral(red: 1, green: 0.8705882353, blue: 0.4431372549, alpha: 1) // FFDE71
     static let v100 = #colorLiteral(red: 0.9803921569, green: 0.7960784314, blue: 0.3019607843, alpha: 1) // FACB4D
     static let v200 = #colorLiteral(red: 0.968627451, green: 0.7411764706, blue: 0.168627451, alpha: 1) // F7BD2B
@@ -82,7 +82,7 @@ struct Color {
     static let v50 =  #colorLiteral(red: 0.5568627451, green: 0.4980392157, blue: 0.968627451, alpha: 1) // 8E7FF7
     static let v100 =  #colorLiteral(red: 0.5568627451, green: 0.3725490196, blue: 0.968627451, alpha: 1) // 8E5FF7
     static let v200 =  #colorLiteral(red: 0.5641855736, green: 0.2085418135, blue: 0.968627451, alpha: 1) // 8E1BF7
-    static let v300 =  #colorLiteral(red: 0.6156862745, green: 0, blue: 1, alpha: 1) // 9D00FF
+    static let v300 =  #colorLiteral(red: 0.5786571649, green: 0.3533550942, blue: 1, alpha: 1) // 9D00FF
   }
   
   struct Red {
@@ -91,7 +91,7 @@ struct Color {
     static let v50 = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1) // C83A4C
     static let v100 = #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1) // C83A4C
     static let v200 = #colorLiteral(red: 0.8078431373, green: 0.3957887414, blue: 0.3333333333, alpha: 1) // C83A4C
-    static let v300 =  #colorLiteral(red: 0.8301583904, green: 0, blue: 0, alpha: 1) // FF9EAA
+    static let v300 =  #colorLiteral(red: 0.5696436216, green: 0, blue: 0, alpha: 1) // FF9EAA
   }
   
   
@@ -163,11 +163,25 @@ struct Color {
     }
   }
   
-  static func getPinkLineView(currentLineCount: Int) -> UIColor {
-    var green = CGFloat(140 - currentLineCount*3)
-    green = green <= 0 ? 0 : green
-    let color = UIColor.init(red: 221/255, green: green/255, blue: 174/255, alpha: 1)
-    return color
+  static func getLineViewColor(currentLineCount: Int) -> UIColor {
+    switch currentLineCount {
+      case 0 ... 10:
+        //yellow
+        let blue = CGFloat(200 - currentLineCount * 20)
+        return UIColor.init(red: 255/255, green: 228/255, blue: blue/255, alpha: 1)
+      case 11 ... 20:
+      	//pink
+        let green = CGFloat(140 - currentLineCount * 14)
+      	return UIColor.init(red: 221/255, green: green/255, blue: 174/255, alpha: 1)
+      case 21 ... 30:
+      	//purple
+      	let green = CGFloat(90 - currentLineCount * 9)
+        return UIColor.init(red: 148/255, green: green/255, blue: 255/255, alpha: 1)
+      default:
+      	//red
+      	let red = CGFloat(145 + currentLineCount * 11)
+        return UIColor.init(red: red/255, green: 0/255, blue: 0/255, alpha: 1)
+    }
   }
 }
 

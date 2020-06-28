@@ -10,10 +10,7 @@ import UIKit
 
 extension VerticalChartRankingView: LineViewDataSource {
   func lineViewStrokeColor(_ lineView: LineView) -> UIColor {
-    guard let dataSource = dataSource else {
-      fatalError("🚨 You have to set dataSource for RankingView.")
-    }
-    return Color.getPinkLineView(currentLineCount: viewModel.presentedLineViews.count)
+    return Color.getLineViewColor(currentLineCount: viewModel.presentedLineViews.count)
   }
   
   
