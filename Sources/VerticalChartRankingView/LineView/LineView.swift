@@ -191,7 +191,7 @@ extension LineView {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set max num for LineView's dataSource")
     }
-    let width = dataSource.lineViewWidth(self)
+    let width = dataSource.lineViewWidth(self) - 20
     let strokeColor = dataSource.lineViewStrokeColor(self)
     let erasedColor = dataSource.lineViewErasedColor(self)
     let lineLayer = CAShapeLayer()
