@@ -179,7 +179,7 @@ extension LineView {
       addSubview(channelImageView)
       channelImageView.anchor(top: topAnchor, bottom: nil, leading: nil, trailing: nil, padding: .init(top: 10, left: 0, bottom: 0, right: 0), size: .init(width: channelImageViewWidth, height: channelImageViewWidth))
       channelImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-      channelImageView.layer.cornerRadius = 40.0
+      channelImageView.layer.cornerRadius = channelImageViewWidth / 2
     }
   }
 }
