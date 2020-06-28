@@ -175,11 +175,11 @@ struct Color {
       	return UIColor.init(red: 221/255, green: green/255, blue: 174/255, alpha: 1)
       case 21 ... 30:
       	//red
-        let red = CGFloat(145 + currentLineCount * 11)
+        let red = CGFloat(145 + currentLineCount - 20 * 11)
         return UIColor.init(red: red/255, green: 0/255, blue: 0/255, alpha: 1)
       default:
         //purple
-        let green = CGFloat(90 - (currentLineCount - 20) * 9)
+        let green = CGFloat(90 - (currentLineCount - 30) * 9)
         return UIColor.init(red: 148/255, green: green/255, blue: 255/255, alpha: 1)
     }
   }
