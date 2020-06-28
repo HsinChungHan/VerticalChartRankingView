@@ -62,7 +62,7 @@ struct Color {
     static let v0 =   #colorLiteral(red: 0.9921568627, green: 0.9254901961, blue: 0.9215686275, alpha: 1) // FDECEB
     static let v10 =  #colorLiteral(red: 0.9607843137, green: 0.7019607843, blue: 0.6823529412, alpha: 1) // F5B3AE
     static let v50 =  #colorLiteral(red: 0.914524472, green: 0.5176470588, blue: 0.5146235185, alpha: 1) // EE847D
-    static let v100 = #colorLiteral(red: 0.9450980392, green: 0.4235294118, blue: 0.3647058824, alpha: 1) // F16C5D
+    static let v100 = #colorLiteral(red: 0.9450980392, green: 0.5497110445, blue: 0.3647058824, alpha: 1) // F16C5D
     static let v200 = #colorLiteral(red: 0.8980392157, green: 0.3764705882, blue: 0.3176470588, alpha: 1) // E56051
     static let v300 = #colorLiteral(red: 0.8549019608, green: 0.337254902, blue: 0.2823529412, alpha: 1) // DA5648
   }
@@ -175,8 +175,8 @@ struct Color {
       	return UIColor.init(red: 221/255, green: green/255, blue: 174/255, alpha: 1)
       case 21 ... 30:
       	//orange
-        let red = CGFloat(90 - (currentLineCount - 20) * 9)
-        return UIColor.init(red: 207/255, green: 0/255, blue: 80/255, alpha: 1)
+        let green = CGFloat(120 - (currentLineCount - 20) * 12)
+        return UIColor.init(red: 207/255, green: green/255, blue: 80/255, alpha: 1)
       default:
         //purple
         let green = CGFloat(90 - (currentLineCount - 30) * 9)
