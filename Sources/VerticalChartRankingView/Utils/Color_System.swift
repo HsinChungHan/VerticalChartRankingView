@@ -72,8 +72,8 @@ struct Color {
     static let v10 =  #colorLiteral(red: 0.8325736973, green: 0.5819242294, blue: 0.6823529412, alpha: 1) // DA63AE
     static let v50 = #colorLiteral(red: 0.8549019608, green: 0.5, blue: 0.6723197648, alpha: 1) // DA2CAE
     static let v100 = #colorLiteral(red: 0.8666666667, green: 0.3827322346, blue: 0.6823529412, alpha: 1) // DD0FAE
-    static let v200 = #colorLiteral(red: 0.8666666667, green: 0.2609696062, blue: 0.6823529412, alpha: 1) // DD0FAE
-    static let v300 = #colorLiteral(red: 0.8666666667, green: 0, blue: 0.6823529412, alpha: 1) // DD0FAE
+    static let v200 = #colorLiteral(red: 0.8666666667, green: 0.5495772688, blue: 0.6823529412, alpha: 1) // DD0FAE
+    static let v300 = #colorLiteral(red: 0.8666666667, green: 0.1607843137, blue: 0.6823529412, alpha: 1) // DD0FAE
   }
   
   struct Purple {
@@ -90,7 +90,7 @@ struct Color {
     static let v10 =  #colorLiteral(red: 0.3098039329, green: 0.01568627544, blue: 0.1294117719, alpha: 1) // F86173
     static let v50 = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1) // C83A4C
     static let v100 = #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1) // C83A4C
-    static let v200 = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1) // C83A4C
+    static let v200 = #colorLiteral(red: 0.8078431373, green: 0.3957887414, blue: 0.3333333333, alpha: 1) // C83A4C
     static let v300 =  #colorLiteral(red: 0.8301583904, green: 0, blue: 0, alpha: 1) // FF9EAA
   }
   
@@ -108,7 +108,7 @@ struct Color {
     static let main = #colorLiteral(red: 0.4235294118, green: 0.4549019608, blue: 0.4901960784, alpha: 1) // 0x6C747D
   }
   
-  static func getLineColor(value: Float) -> UIColor {
+  static func getLineColorWith(value: Float) -> UIColor {
     switch value {
       case 0 ..< 100000:
         return Green.v10
@@ -163,7 +163,12 @@ struct Color {
     }
   }
   
-  
+  static func getPinkLineView(currentLineCount: Int) -> UIColor {
+    var green = CGFloat(140 - currentLineCount*3)
+    green = green <= 0 ? 0 : green
+    let color = UIColor.init(red: 221/255, green: green/255, blue: 174/255, alpha: 1)
+    return color
+  }
 }
 
 struct ThemeColor {

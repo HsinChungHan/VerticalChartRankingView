@@ -20,6 +20,7 @@ protocol LineViewDataSource: AnyObject {
   func lineViewDrawLineDuration(_ lineView: LineView) -> TimeInterval
   func lineViewIconYTransationDuration(_ lineView: LineView) -> TimeInterval
   
+  func lineViewStrokeColor(_ lineView: LineView) -> UIColor
   func lineViewErasedColor(_ lineView: LineView) -> UIColor
   
   func lineViewWidth(_ lineView: LineView) -> CGFloat
@@ -191,8 +192,7 @@ extension LineView {
       fatalError("🚨 You have to set max num for LineView's dataSource")
     }
     let width = dataSource.lineViewWidth(self)
-    
-    let strokeColor = Color.getLineColor(value: viewModel.value)
+    let strokeColor = dataSource.lineViewStrokeColor(self)
     let erasedColor = dataSource.lineViewErasedColor(self)
     let lineLayer = CAShapeLayer()
     

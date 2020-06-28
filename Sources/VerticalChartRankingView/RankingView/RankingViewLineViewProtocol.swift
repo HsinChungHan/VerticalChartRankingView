@@ -9,6 +9,13 @@
 import UIKit
 
 extension VerticalChartRankingView: LineViewDataSource {
+  func lineViewStrokeColor(_ lineView: LineView) -> UIColor {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    return dataSource.verticalChartRankingViewLineViewStrokeColor(self)
+  }
+  
   
   func lineViewShouldUseIDLabel(_ lineView: LineView) -> Bool {
     guard let dataSource = dataSource else {
