@@ -49,6 +49,7 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewTextLayerFont(_ rankingView: VerticalChartRankingView) -> UIFont
   func verticalChartRankingViewIconViewLayerImageLayerBackgroundColor(_ rankingView: VerticalChartRankingView) -> UIColor
   func verticalChartRankingViewIconViewLayerTextLayerBackgroundColor(_ rankingView: VerticalChartRankingView) -> UIColor
+  func verticalChartRankingViewBusinessLogo(_ rankingView: VerticalChartRankingView) -> String
 }
 
 public protocol VerticalChartRankingViewDelegate: AnyObject {
@@ -64,6 +65,8 @@ public class VerticalChartRankingView: UIView {
   lazy var viewModel = makeRankingViewVM()
   lazy var scrollView = makeScrollView()
   lazy var overallView = makeOverallView()
+  lazy var logoImageView = makeLogoImageView()
+  
   var lastIconViewLayer: IconViewLayer?
   var timer: Timer?
   
@@ -239,6 +242,19 @@ public class VerticalChartRankingView: UIView {
     return layer
   }
   
+  func makeLogoImageView() -> UIImageView {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    let logo = dataSource.verticalChartRankingViewBusinessLogo(self)
+    let imageView = UIImageView()
+    imageView.image = UIImage(named: logo)
+    imageView.contentMode = .scaleAspectFill
+    imageView.alpha = 0.6
+    imageView.clipsToBounds = true
+    return imageView
+  }
+  
   fileprivate func setupLayout() {
     addSubview(scrollView)
     scrollView.fillSuperView()
@@ -251,6 +267,8 @@ public class VerticalChartRankingView: UIView {
     scrollView.backgroundColor = backgroundColor
     scrollView.addSubview(overallView)
     overallView.anchor(top: scrollView.topAnchor, bottom: nil, leading: scrollView.leadingAnchor, trailing: nil, size: .init(width: width, height: height))
+    addSubview(logoImageView)
+    logoImageView.anchor(top: nil, bottom: bottomAnchor, leading: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 20, right: 20), size: .init(width: 100, height: 30))
     layoutIfNeeded()
   }
 }
