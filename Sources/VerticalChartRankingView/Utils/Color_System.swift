@@ -166,21 +166,38 @@ struct Color {
   static func getLineViewColor(currentLineCount: Int) -> UIColor {
     switch currentLineCount {
       case 0 ... 10:
-        //yellow
-        let blue = CGFloat(200 - currentLineCount * 20)
-        return UIColor.init(red: 255/255, green: 228/255, blue: blue/255, alpha: 1)
-      case 11 ... 20:
-        //orange
-        let green = CGFloat(120 - (currentLineCount - 10) * 12)
-        return UIColor.init(red: 207/255, green: green/255, blue: 80/255, alpha: 1)
-      case 21 ... 30:
-      	//pink
-        let green = CGFloat(140 - (currentLineCount - 20) * 14)
+        //green
+        let green = CGFloat(125 + (currentLineCount) * 13)
         return UIColor.init(red: 221/255, green: green/255, blue: 174/255, alpha: 1)
-      default:
+      
+      case 11 ... 20:
+        //blue
+        let green = CGFloat(115 - (currentLineCount - 10) * 11.5)
+        return UIColor.init(red: 45/255, green: green/255, blue: 225/255, alpha: 1)
+      
+      case 21 ... 30:
+        //yellow
+        let green = CGFloat(175 + (currentLineCount - 20) * 8)
+        return UIColor.init(red: 245/255, green: green/255, blue: 35/255, alpha: 1)
+      
+      case 31 ... 40:
+        //orange
+        let red = CGFloat(180 + (currentLineCount - 30) * 7.5)
+        return UIColor.init(red: red/255, green: 90/255, blue: 19/255, alpha: 1)
+      
+      case 41 ... 50:
+        //pink
+        let green = CGFloat(140 - (currentLineCount - 40) * 14)
+        return UIColor.init(red: 221/255, green: green/255, blue: 174/255, alpha: 1)
+      
+      case 51 ... 60:
         //purple
-        let green = CGFloat(90 - (currentLineCount - 30) * 9)
-        return UIColor.init(red: 148/255, green: green/255, blue: 255/255, alpha: 1)
+        let green = CGFloat(90 - (currentLineCount - 50) * 9)
+        return UIColor.init(red: 175/255, green: green/255, blue: 175/255, alpha: 1)
+      default:
+        //red
+        let red = CGFloat(130 + (currentLineCount - 60) * 12.5)
+        return UIColor.init(red: red/255, green: 5/255, blue: 50/255, alpha: 1)
     }
   }
 }
