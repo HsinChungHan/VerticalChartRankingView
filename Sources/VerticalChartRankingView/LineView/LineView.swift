@@ -43,6 +43,8 @@ protocol LineViewDataSource: AnyObject {
   func lineViewIDLabelIsSizeToFit(_ lineView: LineView) -> Bool
   
   func lineViewShouldUseIDLabel(_ lineView: LineView) -> Bool
+  
+  func lineViewOrderNumber(_ lineView: LineView) -> Int
 }
 
 
@@ -59,6 +61,7 @@ class LineView: UIView {
   weak var delegate: LineViewDelegate?
   lazy var viewModel = makeViewModel()
   lazy var idLabel = makeLabel(name: viewModel.name)
+  lazy var orderNumberLabel = makeOrderNumberLabel()
   lazy var channelImageView = makeImageView(image: viewModel.channelImage)
   lazy var imageLayer = makeImageLayer(image: viewModel.icon)
   lazy var textLayer = makeTextLayer()
@@ -142,6 +145,25 @@ extension LineView {
     return label
   }
   
+  fileprivate func makeOrderNumberLabel() -> UILabel {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set max num for LineView's dataSource")
+    }
+    let orderNumber = dataSource.lineViewOrderNumber(self)
+    var suffixStr = "th"
+    switch orderNumber {
+      case 1:
+      	suffixStr = "st"
+      case 2:
+      	suffixStr = "nd"
+      case 3:
+      	suffixStr = "rd"
+      default:
+      	break
+    }
+    return makeLabel(name: "\(orderNumber)\(suffixStr)")
+  }
+  
   fileprivate func makeImageView(image: UIImage) -> UIImageView {
     let imgView = UIImageView()
     imgView.image = image
@@ -176,8 +198,11 @@ extension LineView {
       addSubview(idLabel)
       idLabel.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .zero, size: .init(width: 0, height: 80))
     }else {
-      addSubview(channelImageView)
-      channelImageView.anchor(top: topAnchor, bottom: nil, leading: nil, trailing: nil, padding: .init(top: 10, left: 0, bottom: 0, right: 0), size: .init(width: channelImageViewWidth, height: channelImageViewWidth))
+      [orderNumberLabel, channelImageView].forEach {
+        addSubview($0)
+      }
+      orderNumberLabel.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .zero, size: .init(width: 0, height: 25))
+      channelImageView.anchor(top: orderNumberLabel.bottomAnchor, bottom: nil, leading: nil, trailing: nil, padding: .init(top: 10, left: 0, bottom: 0, right: 0), size: .init(width: channelImageViewWidth, height: channelImageViewWidth))
       channelImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
       channelImageView.layer.cornerRadius = channelImageViewWidth / 2
     }

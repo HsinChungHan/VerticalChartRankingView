@@ -18,6 +18,12 @@ class VeritcalChartRankingViewVM {
   fileprivate var presentedLineModels = [LineModel]()
   private(set) var presentedLineViews = [LineView]()
   
+  var lineViewOrderNumber: Int {
+    let lineModelsCount = rawDataOflineModels.count
+    let presentedLineModelsCount = presentedLineModels.count
+    return lineModelsCount - presentedLineModelsCount + 1
+  }
+  
   var rankingViewMaxValue: Float {
     let maxValue: Float = currentLineModel?.value ?? 0
     for lineModel in presentedLineModels {

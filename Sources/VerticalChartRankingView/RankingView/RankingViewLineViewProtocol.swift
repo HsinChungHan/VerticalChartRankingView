@@ -9,6 +9,10 @@
 import UIKit
 
 extension VerticalChartRankingView: LineViewDataSource {
+  func lineViewOrderNumber(_ lineView: LineView) -> Int {
+    return viewModel.lineViewOrderNumber
+  }
+  
   func lineViewStrokeColor(_ lineView: LineView) -> UIColor {
     return Color.getLineViewColor(currentLineCount: viewModel.presentedLineViews.count)
   }
