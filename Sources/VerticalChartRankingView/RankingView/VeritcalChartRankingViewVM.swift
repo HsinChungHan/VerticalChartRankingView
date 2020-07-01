@@ -20,7 +20,7 @@ class VeritcalChartRankingViewVM {
   
   var lineViewOrderNumber: Int {
     let lineModelsCount = rawDataOflineModels.count
-    let presentedLineModelsCount = presentedLineModels.count
+    let presentedLineViewsCount = presentedLineViews.count
     return lineModelsCount - presentedLineModelsCount + 1
   }
   
