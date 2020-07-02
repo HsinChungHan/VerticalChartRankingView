@@ -14,7 +14,8 @@ extension VerticalChartRankingView: LineViewDataSource {
   }
   
   func lineViewStrokeColor(_ lineView: LineView) -> UIColor {
-    return Color.getLineViewColor(currentLineCount: viewModel.presentedLineViews.count)
+//    return Color.getLineViewColor(currentLineCount: viewModel.presentedLineViews.count)
+    return UIColor.init(red: CGFloat(Int.random(in: 255)) / 255, green: CGFloat(Int.random(in: 255)) / 255, blue: CGFloat(Int.random(in: 255)) / 255, alpha: 0.9)
   }
   
   
