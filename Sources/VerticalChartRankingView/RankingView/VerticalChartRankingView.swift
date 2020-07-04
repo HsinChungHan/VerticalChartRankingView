@@ -256,15 +256,19 @@ public class VerticalChartRankingView: UIView {
   }
   
   fileprivate func makeGradientLayer() -> CAGradientLayer {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    let color = dataSource.verticalChartRankingViewBackgroundColor(self)
     let gradientLayer = CAGradientLayer()
     gradientLayer.colors = [
       #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor,
-      #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).withAlphaComponent(0.5).cgColor,
+      color.cgColor,
       #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor,
     ]
 //    gradientLayer.startPoint = CGPoint(x: 0, y: 0)
 //    gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-    gradientLayer.locations = [0.0, 0.1, 0.9, 1.0]
+    gradientLayer.locations = [0.0, 0.2, 0.8, 1.0]
     return gradientLayer
   }
   
