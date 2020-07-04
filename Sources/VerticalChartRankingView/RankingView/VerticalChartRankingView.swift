@@ -264,7 +264,7 @@ public class VerticalChartRankingView: UIView {
     ]
     gradientLayer.startPoint = CGPoint(x: 0, y: 0)
     gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-    gradientLayer.locations = [0.0, 0.5, 1.0]
+    gradientLayer.locations = [0.0, 0.1, 0.9, 1.0]
     return gradientLayer
   }
   
