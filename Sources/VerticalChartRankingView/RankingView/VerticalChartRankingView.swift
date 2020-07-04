@@ -255,6 +255,19 @@ public class VerticalChartRankingView: UIView {
     return imageView
   }
   
+  fileprivate func makeGradientLayer() -> CAGradientLayer {
+    let gradientLayer = CAGradientLayer()
+    gradientLayer.colors = [
+      #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor,
+      #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).withAlphaComponent(0.5).cgColor,
+      #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor,
+    ]
+    gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+    gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+    gradientLayer.locations = [0.0, 0.5, 1.0]
+    return gradientLayer
+  }
+  
   fileprivate func setupLayout() {
     addSubview(scrollView)
     scrollView.fillSuperView()
@@ -270,6 +283,9 @@ public class VerticalChartRankingView: UIView {
     addSubview(logoImageView)
     logoImageView.anchor(top: nil, bottom: bottomAnchor, leading: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 20, right: 20), size: .init(width: 100, height: 30))
     layoutIfNeeded()
+    let gradientLayer = makeGradientLayer()
+    gradientLayer.frame = overallView.bounds
+    overallView.layer.addSublayer(gradientLayer)
   }
 }
 
