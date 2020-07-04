@@ -255,7 +255,7 @@ public class VerticalChartRankingView: UIView {
     return imageView
   }
   
-  fileprivate func makeGradientLayer() -> CAGradientLayer {
+  fileprivate func makeUpperGradientLayer() -> CAGradientLayer {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -264,13 +264,24 @@ public class VerticalChartRankingView: UIView {
     gradientLayer.colors = [
       #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor,
       overallViewBgColor.cgColor,
-      #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor,
     ]
-//    gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-//    gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-    gradientLayer.locations = [0.0, 0.2, 1.0]
+    gradientLayer.locations = [0.0, 0.2]
     return gradientLayer
   }
+  
+  fileprivate func makeLowerGradientLayer() -> CAGradientLayer {
+      guard let dataSource = dataSource else {
+        fatalError("🚨 You have to set dataSource for RankingView.")
+      }
+      let overallViewBgColor = dataSource.verticalChartRankingViewBackgroundColor(self)
+      let gradientLayer = CAGradientLayer()
+      gradientLayer.colors = [
+        overallViewBgColor.cgColor,
+        #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor,
+      ]
+      gradientLayer.locations = [0.0, 0.2]
+      return gradientLayer
+    }
   
   fileprivate func setupLayout() {
     addSubview(scrollView)
@@ -287,9 +298,13 @@ public class VerticalChartRankingView: UIView {
     addSubview(logoImageView)
     logoImageView.anchor(top: nil, bottom: bottomAnchor, leading: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 20, right: 20), size: .init(width: 100, height: 30))
     layoutIfNeeded()
-    let gradientLayer = makeGradientLayer()
-    gradientLayer.frame = overallView.bounds
-    overallView.layer.addSublayer(gradientLayer)
+    let upperGradientLayer = makeUpperGradientLayer()
+    upperGradientLayer.frame = CGRect(x: overallView.bounds.minX, y: overallView.bounds.minY, width: overallView.bounds.width, height: overallView.bounds.height / 5)
+    overallView.layer.addSublayer(upperGradientLayer)
+    
+    let lowerGradientLayer = makeLowerGradientLayer()
+    lowerGradientLayer.frame = CGRect(x: overallView.bounds.minX, y: overallView.bounds.maxY - overallView.bounds.height / 5, width: overallView.bounds.width, height: overallView.bounds.height / 5)
+    overallView.layer.addSublayer(lowerGradientLayer)
   }
 }
 
