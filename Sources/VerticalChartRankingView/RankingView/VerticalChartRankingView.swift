@@ -263,12 +263,9 @@ public class VerticalChartRankingView: UIView {
     let gradientLayer = CAGradientLayer()
     gradientLayer.colors = [
       #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).withAlphaComponent(0.6).cgColor,
-      overallViewBgColor.withAlphaComponent(0.6).cgColor,
-      overallViewBgColor.cgColor,
+      overallViewBgColor.withAlphaComponent(0.3).cgColor,
     ]
-    gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-    gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-    gradientLayer.locations = [0.0, 0.5, 1.0]
+    gradientLayer.locations = [0.0, 1.0]
     return gradientLayer
   }
   
@@ -279,13 +276,10 @@ public class VerticalChartRankingView: UIView {
       let overallViewBgColor = dataSource.verticalChartRankingViewBackgroundColor(self)
       let gradientLayer = CAGradientLayer()
       gradientLayer.colors = [
-        overallViewBgColor.cgColor,
-        overallViewBgColor.withAlphaComponent(0.6).cgColor,
+        overallViewBgColor.withAlphaComponent(0.3).cgColor,
         #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).withAlphaComponent(0.6).cgColor,
       ]
-    gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-    gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-    gradientLayer.locations = [0.0, 0.5, 1.0]
+    gradientLayer.locations = [0.0, 1.0]
       return gradientLayer
     }
   
