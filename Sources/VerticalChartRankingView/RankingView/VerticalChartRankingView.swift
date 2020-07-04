@@ -262,8 +262,8 @@ public class VerticalChartRankingView: UIView {
       #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).withAlphaComponent(0.5).cgColor,
       #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).cgColor,
     ]
-    gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-    gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+//    gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+//    gradientLayer.endPoint = CGPoint(x: 1, y: 1)
     gradientLayer.locations = [0.0, 0.1, 0.9, 1.0]
     return gradientLayer
   }
