@@ -115,7 +115,7 @@ public class VerticalChartRankingView: UIView {
     let iconViewLayer = makeIconViewLayer()
     lastIconViewLayer = iconViewLayer
     //因為 lineView 的 imageView 會佔據 100
-    iconViewLayer.frame = CGRect(x: frame.midX - width / 2 , y: bounds.minY + 100, width: width, height: iconViewLayerHeight)
+    iconViewLayer.frame = CGRect(x: frame.midX - width / 2 , y: bounds.minY + 20, width: width, height: iconViewLayerHeight)
     
     if viewModel.isCurrentLineModelAlreadyExistInPresentedLineModels {
       if let currentLineView = viewModel.currentLineView {
