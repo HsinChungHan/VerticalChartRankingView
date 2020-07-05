@@ -39,8 +39,13 @@ class VeritcalChartRankingViewVM {
     return calculator.calculateLineViewWidth(rankingViewWidth: rankingViewWidth, padding: padding, numberOfPresentedViews: numberOfPresentingViews)
   }
   
+  let isPhotoLandscape: Bool
+  
   var imageLayerHeight: CGFloat {
-    return lineViewWidth * 720 / 1280
+    if isPhotoLandscape {
+      return lineViewWidth * 720 / 1280
+    }
+    return lineViewWidth * 1.25
   }
   
   var currentLineView: LineView? {
@@ -66,11 +71,12 @@ class VeritcalChartRankingViewVM {
     return false
   }
   
-  init(numberOfPresentingViews: Int, padding: CGFloat, rawDataOflineModels: [LineModel], rankingViewWidth: CGFloat) {
+  init(numberOfPresentingViews: Int, padding: CGFloat, rawDataOflineModels: [LineModel], rankingViewWidth: CGFloat, isPhotoLandscape: Bool) {
     self.numberOfPresentingViews = numberOfPresentingViews
     self.padding = padding
     self.rawDataOflineModels = rawDataOflineModels
     self.rankingViewWidth = rankingViewWidth
+    self.isPhotoLandscape = isPhotoLandscape
   }
   
   //每次外面的 timer 都會最先呼叫這個 function

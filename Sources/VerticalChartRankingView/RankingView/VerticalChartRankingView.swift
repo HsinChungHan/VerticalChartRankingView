@@ -50,6 +50,8 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewIconViewLayerImageLayerBackgroundColor(_ rankingView: VerticalChartRankingView) -> UIColor
   func verticalChartRankingViewIconViewLayerTextLayerBackgroundColor(_ rankingView: VerticalChartRankingView) -> UIColor
   func verticalChartRankingViewBusinessLogo(_ rankingView: VerticalChartRankingView) -> String
+  
+  func verticalChartRankingLineViewIsPhotoLandscape(_ rankingView: VerticalChartRankingView) -> Bool
 }
 
 public protocol VerticalChartRankingViewDelegate: AnyObject {
@@ -195,13 +197,15 @@ public class VerticalChartRankingView: UIView {
     let numberOfPresentingViews = dataSource.verticalChartRankingViewNumberOfPresentedViews(self)
     let padding = dataSource.verticalChartRankingViewPadding(self)
     let lineModelTuples = dataSource.verticalChartRankingViewLineModels(self)
+    let isPhotoLandscape = dataSource.verticalChartRankingLineViewIsPhotoLandscape(self)
+    
     var lineModels = [LineModel]()
     for tuple in lineModelTuples {
       let lineModel = LineModel(id: tuple.id, name: tuple.name, value: tuple.value, icon: UIImage(named: tuple.icon)!, channelImage: UIImage(named: tuple.channelImage)!)
       lineModels.append(lineModel)
     }
     layoutIfNeeded()
-    let vm = VeritcalChartRankingViewVM(numberOfPresentingViews: numberOfPresentingViews, padding: padding, rawDataOflineModels: lineModels, rankingViewWidth: bounds.width)
+    let vm = VeritcalChartRankingViewVM(numberOfPresentingViews: numberOfPresentingViews, padding: padding, rawDataOflineModels: lineModels, rankingViewWidth: bounds.width, isPhotoLandscape: isPhotoLandscape)
     return vm
   }
   

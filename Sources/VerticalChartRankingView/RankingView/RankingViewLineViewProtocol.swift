@@ -9,6 +9,14 @@
 import UIKit
 
 extension VerticalChartRankingView: LineViewDataSource {
+  func lineViewIsPhotoLandscape(_ lineView: LineView) -> Bool {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    
+    return dataSource.verticalChartRankingLineViewIsPhotoLandscape(self)
+  }
+  
   func lineViewOrderNumber(_ lineView: LineView) -> Int {
     return viewModel.lineViewOrderNumber
   }

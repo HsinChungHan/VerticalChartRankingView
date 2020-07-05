@@ -45,6 +45,8 @@ protocol LineViewDataSource: AnyObject {
   func lineViewShouldUseIDLabel(_ lineView: LineView) -> Bool
   
   func lineViewOrderNumber(_ lineView: LineView) -> Int
+  
+  func lineViewIsPhotoLandscape(_ lineView: LineView) -> Bool
 }
 
 
