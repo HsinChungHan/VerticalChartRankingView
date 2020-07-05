@@ -45,7 +45,7 @@ class VeritcalChartRankingViewVM {
     if isPhotoLandscape {
       return lineViewWidth * 720 / 1280
     }
-    return lineViewWidth * 1.25
+    return lineViewWidth
   }
   
   var currentLineView: LineView? {
