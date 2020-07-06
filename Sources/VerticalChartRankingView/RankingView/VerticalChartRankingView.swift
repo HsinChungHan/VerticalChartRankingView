@@ -108,6 +108,8 @@ public class VerticalChartRankingView: UIView {
     let width = viewModel.lineViewWidth / scaleX
     let iconViewLayerHeight = (imageLayerHeight + textLayerHeight) / scale
     
+    let isPhotoLandscape = dataSource.verticalChartRankingLineViewIsPhotoLandscape(self)
+    
     //在這邊決定好 rank
     viewModel.updatePresentedRank(currentLineModel: lineModel)
     
@@ -115,7 +117,11 @@ public class VerticalChartRankingView: UIView {
     let iconViewLayer = makeIconViewLayer()
     lastIconViewLayer = iconViewLayer
     //因為 lineView 的 imageView 會佔據 100
-    iconViewLayer.frame = CGRect(x: frame.midX - width / 2 , y: bounds.minY + 20, width: width, height: iconViewLayerHeight)
+    var minY: CGFloat = bounds.minY + 20
+    if isPhotoLandscape {
+      minY += 100
+    }
+    iconViewLayer.frame = CGRect(x: frame.midX - width / 2 , y: minY, width: width, height: iconViewLayerHeight)
     
     if viewModel.isCurrentLineModelAlreadyExistInPresentedLineModels {
       if let currentLineView = viewModel.currentLineView {
