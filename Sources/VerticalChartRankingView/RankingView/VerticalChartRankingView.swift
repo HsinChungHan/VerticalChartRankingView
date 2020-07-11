@@ -57,6 +57,7 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
 public protocol VerticalChartRankingViewDelegate: AnyObject {
   func verticalChartRankingDidStart(_ rankingView: VerticalChartRankingView)
   func verticalChartRankingDidStop(_ rankingView: VerticalChartRankingView)
+  
 }
 
 public class VerticalChartRankingView: UIView {
@@ -81,6 +82,10 @@ public class VerticalChartRankingView: UIView {
     setupLayout()
     timer = makeTimer()
     RunLoop.current.add(timer!, forMode: .common)
+  }
+  
+  public func scrollToLast(offsetX: CGFloat) {
+    scrollView.setContentOffset(.init(x: offsetX, y: 0), animated: true)
   }
   
   fileprivate func makeTimer() -> Timer {
