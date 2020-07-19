@@ -70,7 +70,7 @@ public class VerticalChartRankingView: UIView {
   lazy var overallView = makeOverallView()
   lazy var logoImageView = makeLogoImageView()
   
-  var lastIconViewLayer: IconViewLayer?
+  var lastIconViewLayer: IconView?
   var timer: Timer?
   
   public func launch() {
@@ -132,7 +132,8 @@ public class VerticalChartRankingView: UIView {
       if let currentLineView = viewModel.currentLineView {
         currentLineView.updateDrawLine()
         //FIXME: - 不知為何不能寫在外面，否則 scroll 的時候會 crash
-        overallView.layer.addSublayer(iconViewLayer)
+        overallView.addSubview(iconViewLayer)
+//        overallView.layer.addSublayer(iconViewLayer)
         iconViewLayer.launchAnimation(isFirstTimePresented: false)
       }
     }else {
@@ -145,7 +146,8 @@ public class VerticalChartRankingView: UIView {
       superview?.layoutIfNeeded()
       lineView.drawLine()
       //FIXME: - 不知為何不能寫在外面，否則 scroll 的時候會 crash
-      overallView.layer.addSublayer(iconViewLayer)
+      overallView.addSubview(iconViewLayer)
+//      overallView.layer.addSublayer(iconViewLayer)
       iconViewLayer.launchAnimation(isFirstTimePresented: true)
     }
     
@@ -249,11 +251,11 @@ public class VerticalChartRankingView: UIView {
     return view
   }
   
-  func makeIconViewLayer() -> IconViewLayer {
-    let layer = IconViewLayer()
+  func makeIconViewLayer() -> IconView {
+    let layer = IconView()
     layer.dataSource = self
     layer.myDelegate = self
-    layer.delegate = self
+//    layer.delegate = self
     return layer
   }
   

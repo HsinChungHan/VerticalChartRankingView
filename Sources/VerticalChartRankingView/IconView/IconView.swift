@@ -11,46 +11,46 @@ import CANumberTextLayer
 
 protocol IconViewLayerDataSource: AnyObject {
   
-  func iconViewLayerLineModel(_ iconViewLayer: IconViewLayer) -> LineModel
-  func iconViewLayerXTransationToValue(_ iconViewLayer: IconViewLayer) -> CGFloat
-  func iconViewLayerYTransationInitialToValue(_ iconViewLayer: IconViewLayer) -> CGFloat
-  func iconViewLayerYTransationToValue(_ iconViewLayer: IconViewLayer) -> CGFloat
-  func iconViewLayerScaleToValue(_ iconViewLayer: IconViewLayer) -> CGFloat
-  func iconViewLayerScaleXToValue(_ iconViewLayer: IconViewLayer) -> CGFloat
+  func iconViewLayerLineModel(_ iconViewLayer: IconView) -> LineModel
+  func iconViewLayerXTransationToValue(_ iconViewLayer: IconView) -> CGFloat
+  func iconViewLayerYTransationInitialToValue(_ iconViewLayer: IconView) -> CGFloat
+  func iconViewLayerYTransationToValue(_ iconViewLayer: IconView) -> CGFloat
+  func iconViewLayerScaleToValue(_ iconViewLayer: IconView) -> CGFloat
+  func iconViewLayerScaleXToValue(_ iconViewLayer: IconView) -> CGFloat
   
-  func iconViewLayerLineViewDrawLineDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval
-  func iconViewLayerOpacityDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval
-  func iconViewLayerStayDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval
-  func iconViewLayerFirstXYTransationDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval
-  func iconViewLayerTotoalDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval
+  func iconViewLayerLineViewDrawLineDuration(_ iconViewLayer: IconView) -> TimeInterval
+  func iconViewLayerOpacityDuration(_ iconViewLayer: IconView) -> TimeInterval
+  func iconViewLayerStayDuration(_ iconViewLayer: IconView) -> TimeInterval
+  func iconViewLayerFirstXYTransationDuration(_ iconViewLayer: IconView) -> TimeInterval
+  func iconViewLayerTotoalDuration(_ iconViewLayer: IconView) -> TimeInterval
   
-  func iconViewLayerRankingViewMaxValue(_ iconViewLayer: IconViewLayer) -> Float
-  func iconViewLayerLineViewHeight(_ iconViewLayer: IconViewLayer) -> CGFloat
-  func iconViewLayerLineViewHeightScale(_ iconViewLayer: IconViewLayer) -> CGFloat
-  func iconViewLayerlineViewMaxY(_ iconViewLayer: IconViewLayer) -> CGFloat
-  func iconViewLayerWidthOfLayer(_ iconViewLayer: IconViewLayer) -> CGFloat
-  func iconViewLayerImageLayerHeiht(_ iconViewLayer: IconViewLayer) -> CGFloat
-  func iconViewLayerTextLayerHeiht(_ iconViewLayer: IconViewLayer) -> CGFloat
+  func iconViewLayerRankingViewMaxValue(_ iconViewLayer: IconView) -> Float
+  func iconViewLayerLineViewHeight(_ iconViewLayer: IconView) -> CGFloat
+  func iconViewLayerLineViewHeightScale(_ iconViewLayer: IconView) -> CGFloat
+  func iconViewLayerlineViewMaxY(_ iconViewLayer: IconView) -> CGFloat
+  func iconViewLayerWidthOfLayer(_ iconViewLayer: IconView) -> CGFloat
+  func iconViewLayerImageLayerHeiht(_ iconViewLayer: IconView) -> CGFloat
+  func iconViewLayerTextLayerHeiht(_ iconViewLayer: IconView) -> CGFloat
   
-  func iconViewLayerTextLayerFontSize(_ iconViewLayer: IconViewLayer) -> CGFloat
-  func iconViewLayerTextLayerTextColor(_ iconViewLayer: IconViewLayer) -> UIColor
-  func iconViewLayerTextLayerFont(_ iconViewLayer: IconViewLayer) -> UIFont
-  func iconViewLayerImageLayerBackgroundColor(_ iconViewLayer: IconViewLayer) -> UIColor
-  func iconViewLayerTextLayerBackgroundColor(_ iconViewLayer: IconViewLayer) -> UIColor
+  func iconViewLayerTextLayerFontSize(_ iconViewLayer: IconView) -> CGFloat
+  func iconViewLayerTextLayerTextColor(_ iconViewLayer: IconView) -> UIColor
+  func iconViewLayerTextLayerFont(_ iconViewLayer: IconView) -> UIFont
+  func iconViewLayerImageLayerBackgroundColor(_ iconViewLayer: IconView) -> UIColor
+  func iconViewLayerTextLayerBackgroundColor(_ iconViewLayer: IconView) -> UIColor
 }
 
 protocol IconViewLayerDelegate: AnyObject {
-  func iconViewLayerDoneAllAnimation(_ iconView: IconViewLayer)
+  func iconViewLayerDoneAllAnimation(_ iconView: IconView)
 }
 
-class IconViewLayer: CALayer {
+class IconView: UIView {
   weak var dataSource: IconViewLayerDataSource?
   weak var myDelegate: IconViewLayerDelegate?
   lazy var vm = makeViewModel()
 }
 
 
-extension IconViewLayer {
+extension IconView {
   
   fileprivate func makeViewModel() -> IconViewLayerViewModel {
     guard let dataSource = dataSource else {
@@ -210,9 +210,12 @@ extension IconViewLayer {
   }
   
   func initializeLayer() {
-    removeFromSuperlayer()
-    sublayers?.removeAll()
-    removeAllAnimations()
+    removeFromSuperview()
+    layer.sublayers?.removeAll()
+    layer.removeAllAnimations()
+//    removeFromSuperlayer()
+//    sublayers?.removeAll()
+//    removeAllAnimations()
   }
   
   func launchAnimation(isFirstTimePresented: Bool) {
@@ -225,39 +228,39 @@ extension IconViewLayer {
     let textLayerHeight = dataSource.iconViewLayerTextLayerHeiht(self)
     let imageLayer = makeImageLayer()
     let textLayer = makeTextLayer()
-    addSublayer(imageLayer)
-    addSublayer(textLayer)
+    layer.addSublayer(imageLayer)
+    layer.addSublayer(textLayer)
     
     imageLayer.frame = CGRect(x: 0, y: 0, width: width, height: imageLayerHeight)
     textLayer.frame = CGRect(x: 0, y: imageLayerHeight, width: width, height: textLayerHeight)
     textLayer.launchDisplayLink()
     
     vm.setIsIconLayerFirstPresented(isIconLayerFirstPresented: isFirstTimePresented)
-    add(makeOpacityAnimationGroup(groupId: "opacityAnimationGroup"), forKey: "opacityAnimationGroup")
+    layer.add(makeOpacityAnimationGroup(groupId: "opacityAnimationGroup"), forKey: "opacityAnimationGroup")
   }
 }
 
 
-extension IconViewLayer: CAAnimationDelegate {
+extension IconView: CAAnimationDelegate {
   
   func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
     let groupId = anim.value(forKey: "groupId") as! String
     
     if groupId == "opacityAnimationGroup" {
       if vm.isIconLayerFirstPresented {
-        add(makeStayTransation(groupId: "stayTransationGroupForFirstPresented"), forKey: "stayTransationGroup")
+        layer.add(makeStayTransation(groupId: "stayTransationGroupForFirstPresented"), forKey: "stayTransationGroup")
       }else {
-         add(makeStayTransation(groupId: "stayTransationGroupForAlreadyPresented"), forKey: "stayTransationGroup")
+         layer.add(makeStayTransation(groupId: "stayTransationGroupForAlreadyPresented"), forKey: "stayTransationGroup")
       }
     }
     
     //這邊是 icon layer 第一次出現，所要做的動畫
     if groupId == "stayTransationGroupForFirstPresented" {
-      add(makeXYTransationAndScaleGroup(groupId: "XYTransationAndScaleGroupForFirstTimePresented", isFirstTimePresented: true), forKey: "XYTransationAndScaleGroup")
+      layer.add(makeXYTransationAndScaleGroup(groupId: "XYTransationAndScaleGroupForFirstTimePresented", isFirstTimePresented: true), forKey: "XYTransationAndScaleGroup")
     }
     
     if groupId == "XYTransationAndScaleGroupForFirstTimePresented" {
-      add(makeYTransationGroup(groupId: "YTransationGroupForFirstTimePresented"), forKey: "YTransationGroup")
+      layer.add(makeYTransationGroup(groupId: "YTransationGroupForFirstTimePresented"), forKey: "YTransationGroup")
     }
     
     if groupId == "YTransationGroupForFirstTimePresented" {
@@ -266,7 +269,7 @@ extension IconViewLayer: CAAnimationDelegate {
     
     //這邊是已經出現過的 icon layer 所要走的動畫
     if groupId == "stayTransationGroupForAlreadyPresented" {
-      add(makeXYTransationAndScaleGroup(groupId: "XYTransationAndScaleGroupForAlreadyPresented", isFirstTimePresented: false), forKey: "XYTransationAndScaleGroup")
+      layer.add(makeXYTransationAndScaleGroup(groupId: "XYTransationAndScaleGroupForAlreadyPresented", isFirstTimePresented: false), forKey: "XYTransationAndScaleGroup")
     }
     
     if groupId == "stayTransationGroupForAlreadyPresented" {
@@ -275,7 +278,7 @@ extension IconViewLayer: CAAnimationDelegate {
   }
 }
 
-extension IconViewLayer: CANumberTextLayerDataSource {
+extension IconView: CANumberTextLayerDataSource {
   func animationNumberTextLayerStartValue(_ animationNumberLabel: CANumberTextlayer) -> Int {
     var value = Int(vm.value)
     for _ in 0 ... (String(value).count - 2) {

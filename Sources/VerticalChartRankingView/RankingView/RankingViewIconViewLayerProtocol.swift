@@ -9,7 +9,7 @@
 import UIKit
 
 extension VerticalChartRankingView: IconViewLayerDataSource {
-  func iconViewLayerTextLayerBackgroundColor(_ iconViewLayer: IconViewLayer) -> UIColor {
+  func iconViewLayerTextLayerBackgroundColor(_ iconViewLayer: IconView) -> UIColor {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -17,7 +17,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return color
   }
   
-  func iconViewLayerImageLayerBackgroundColor(_ iconViewLayer: IconViewLayer) -> UIColor {
+  func iconViewLayerImageLayerBackgroundColor(_ iconViewLayer: IconView) -> UIColor {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -26,7 +26,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
   }
   
   
-  func iconViewLayerTextLayerFont(_ iconViewLayer: IconViewLayer) -> UIFont {
+  func iconViewLayerTextLayerFont(_ iconViewLayer: IconView) -> UIFont {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -34,7 +34,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return font
   }
   
-  func iconViewLayerTextLayerFontSize(_ iconViewLayer: IconViewLayer) -> CGFloat {
+  func iconViewLayerTextLayerFontSize(_ iconViewLayer: IconView) -> CGFloat {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -42,7 +42,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return fontSize
   }
   
-  func iconViewLayerTextLayerTextColor(_ iconViewLayer: IconViewLayer) -> UIColor {
+  func iconViewLayerTextLayerTextColor(_ iconViewLayer: IconView) -> UIColor {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -50,7 +50,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return textColor
   }
   
-  func iconViewLayerStayDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval {
+  func iconViewLayerStayDuration(_ iconViewLayer: IconView) -> TimeInterval {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -58,26 +58,26 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
   }
   
   
-  func iconViewLayerOpacityDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval {
+  func iconViewLayerOpacityDuration(_ iconViewLayer: IconView) -> TimeInterval {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
     return dataSource.verticalChartRankingViewIconViewLayerOpacityDuration(self)
   }
   
-  func iconViewLayerLineViewHeightScale(_ iconViewLayer: IconViewLayer) -> CGFloat {
+  func iconViewLayerLineViewHeightScale(_ iconViewLayer: IconView) -> CGFloat {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
     return dataSource.verticalChartRankingViewLineViewHeightScale(self)
   }
   
-  func iconViewLayerLineModel(_ iconViewLayer: IconViewLayer) -> LineModel {
+  func iconViewLayerLineModel(_ iconViewLayer: IconView) -> LineModel {
     //TODO: - 要去寫 LineModel == nil 的情況
     return viewModel.currentLineModel ?? LineModel(id: "QQQ", name: "GGG", value: 0, icon: UIImage(), channelImage: UIImage())
   }
   
-  func iconViewLayerXTransationToValue(_ iconViewLayer: IconViewLayer) -> CGFloat {
+  func iconViewLayerXTransationToValue(_ iconViewLayer: IconView) -> CGFloat {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -89,7 +89,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return offSetX
   }
   
-  func iconViewLayerYTransationInitialToValue(_ iconViewLayer: IconViewLayer) -> CGFloat {
+  func iconViewLayerYTransationInitialToValue(_ iconViewLayer: IconView) -> CGFloat {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -99,7 +99,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return iconViewLayer.vm.initialTransationY - lineViewIconHeight / 2
   }
   
-  func iconViewLayerYTransationToValue(_ iconViewLayer: IconViewLayer) -> CGFloat {
+  func iconViewLayerYTransationToValue(_ iconViewLayer: IconView) -> CGFloat {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -109,14 +109,14 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return iconViewLayer.vm.transationYToValue - lineViewIconHeight / 2
   }
   
-  func iconViewLayerScaleToValue(_ iconViewLayer: IconViewLayer) -> CGFloat {
+  func iconViewLayerScaleToValue(_ iconViewLayer: IconView) -> CGFloat {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
     return dataSource.verticalChartRankingViewIconViewLayerScaleToValue(self)
   }
   
-  func iconViewLayerScaleXToValue(_ iconViewLayer: IconViewLayer) -> CGFloat {
+  func iconViewLayerScaleXToValue(_ iconViewLayer: IconView) -> CGFloat {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -124,7 +124,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
   }
   
   //為了要算 lineView drawLine 的速度，所以要傳進去 lineView drawLine duration
-  func iconViewLayerLineViewDrawLineDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval {
+  func iconViewLayerLineViewDrawLineDuration(_ iconViewLayer: IconView) -> TimeInterval {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -132,7 +132,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return duration
   }
   
-  func iconViewLayerFirstXYTransationDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval {
+  func iconViewLayerFirstXYTransationDuration(_ iconViewLayer: IconView) -> TimeInterval {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -140,7 +140,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return duration
   }
   
-  func iconViewLayerTotoalDuration(_ iconViewLayer: IconViewLayer) -> TimeInterval {
+  func iconViewLayerTotoalDuration(_ iconViewLayer: IconView) -> TimeInterval {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -148,18 +148,18 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return duration
   }
   
-  func iconViewLayerRankingViewMaxValue(_ iconViewLayer: IconViewLayer) -> Float {
+  func iconViewLayerRankingViewMaxValue(_ iconViewLayer: IconView) -> Float {
     return viewModel.rankingViewMaxValue
   }
   
-  func iconViewLayerLineViewHeight(_ iconViewLayer: IconViewLayer) -> CGFloat {
+  func iconViewLayerLineViewHeight(_ iconViewLayer: IconView) -> CGFloat {
     guard let dataSource = dataSource else {
          fatalError("🚨 You have to set dataSource for RankingView.")
     }
     return dataSource.verticalChartRankingViewLineViewHeight(self)
   }
   
-  func iconViewLayerlineViewMaxY(_ iconViewLayer: IconViewLayer) -> CGFloat {
+  func iconViewLayerlineViewMaxY(_ iconViewLayer: IconView) -> CGFloat {
     guard let dataSource = dataSource else {
          fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -167,7 +167,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return bounds.minY + lineViewHeight
   }
   
-  func iconViewLayerWidthOfLayer(_ iconViewLayer: IconViewLayer) -> CGFloat {
+  func iconViewLayerWidthOfLayer(_ iconViewLayer: IconView) -> CGFloat {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -175,7 +175,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return viewModel.lineViewWidth / scaleToValue
   }
   
-  func iconViewLayerImageLayerHeiht(_ iconViewLayer: IconViewLayer) -> CGFloat {
+  func iconViewLayerImageLayerHeiht(_ iconViewLayer: IconView) -> CGFloat {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -184,7 +184,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
     return imageLayerHeight / scaleToValue
   }
   
-  func iconViewLayerTextLayerHeiht(_ iconViewLayer: IconViewLayer) -> CGFloat {
+  func iconViewLayerTextLayerHeiht(_ iconViewLayer: IconView) -> CGFloat {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
@@ -197,7 +197,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
 }
 
 extension VerticalChartRankingView: IconViewLayerDelegate {
-  func iconViewLayerDoneAllAnimation(_ iconView: IconViewLayer) {
+  func iconViewLayerDoneAllAnimation(_ iconView: IconView) {
     if let currentLineView = viewModel.presentedLineViews.last {
       currentLineView.imageLayer.isHidden = false
       currentLineView.textLayer.isHidden = false
