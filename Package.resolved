@@ -18,6 +18,15 @@
           "revision": "8acac6590450f05bd7aa06bdd3b757bc35605968",
           "version": "1.1.2"
         }
+      },
+      {
+        "package": "TinderStyleWipedCard",
+        "repositoryURL": "https://github.com/HsinChungHan/TinderStyleWipedCardPackage.git",
+        "state": {
+          "branch": null,
+          "revision": "bf778d5143af71316235fa7b0ad5b10ee2754159",
+          "version": "1.0.5"
+        }
       }
     ]
   },

@@ -20,12 +20,26 @@ class LineViewModel {
     return lineModel.name
   }
   
-  var icon: UIImage {
-    return lineModel.icon
+  var iconNames: [String] {
+    return lineModel.iconNames
+  }
+  
+  var channelImageName: String {
+    return lineModel.channelImageName
+  }
+  
+  var icons: [UIImage] {
+    var icons = [UIImage]()
+    for iconName in iconNames {
+      let icon = UIImage(named: iconName)!
+      icons.append(icon)
+    }
+    return icons
   }
   
   var channelImage: UIImage {
-    return lineModel.channelImage
+    let channelImage = UIImage(named: channelImageName)!
+    return channelImage
   }
   
   var value: Float {

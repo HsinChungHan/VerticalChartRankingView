@@ -34,7 +34,7 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   
   func verticalChartRankingViewNumberOfPresentedViews(_ rankingView: VerticalChartRankingView) -> Int
   func verticalChartRankingViewPadding(_ rankingView: VerticalChartRankingView) -> CGFloat
-  func verticalChartRankingViewLineModels(_ rankingView: VerticalChartRankingView) -> [(id: String, name: String, value: Float, icon: String, channelImage: String, description: String)]
+  func verticalChartRankingViewLineModels(_ rankingView: VerticalChartRankingView) -> [(id: String, name: String, value: Float, iconNames: [String], channelImageName: String, description: String)]
   
   func verticalChartRankingViewLineViewHeightScale(_ rankingView: VerticalChartRankingView) -> CGFloat
   func verticalChartRankingViewLineViewHeight(_ rankingView: VerticalChartRankingView) -> CGFloat
@@ -49,6 +49,7 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewTextLayerFont(_ rankingView: VerticalChartRankingView) -> UIFont
   func verticalChartRankingViewIconViewLayerImageLayerBackgroundColor(_ rankingView: VerticalChartRankingView) -> UIColor
   func verticalChartRankingViewIconViewLayerTextLayerBackgroundColor(_ rankingView: VerticalChartRankingView) -> UIColor
+  func verticalChartRankingViewIconViewLayerImageType(_ rankingView: VerticalChartRankingView) -> ImageType
   func verticalChartRankingViewBusinessLogo(_ rankingView: VerticalChartRankingView) -> String
   
   func verticalChartRankingLineViewIsPhotoLandscape(_ rankingView: VerticalChartRankingView) -> Bool
@@ -214,7 +215,7 @@ public class VerticalChartRankingView: UIView {
     
     var lineModels = [LineModel]()
     for tuple in lineModelTuples {
-      let lineModel = LineModel(id: tuple.id, name: tuple.name, value: tuple.value, icon: UIImage(named: tuple.icon)!, channelImage: UIImage(named: tuple.channelImage)!)
+      let lineModel = LineModel(id: tuple.id, name: tuple.name, value: tuple.value, iconNames: tuple.iconNames, channelImageName: tuple.channelImageName)
       lineModels.append(lineModel)
     }
     layoutIfNeeded()

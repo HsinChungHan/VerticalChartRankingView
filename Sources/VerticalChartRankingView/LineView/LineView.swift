@@ -65,7 +65,7 @@ class LineView: UIView {
   lazy var idLabel = makeLabel(name: viewModel.name)
   lazy var orderNumberLabel = makeOrderNumberLabel()
   lazy var channelImageView = makeImageView(image: viewModel.channelImage)
-  lazy var imageLayer = makeImageLayer(image: viewModel.icon)
+  lazy var imageLayer = makeImageLayer(image: viewModel.icons.last!)
   lazy var textLayer = makeTextLayer()
   lazy var overallLayer = makeOverallLayer()
   

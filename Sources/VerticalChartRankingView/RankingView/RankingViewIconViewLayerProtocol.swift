@@ -8,7 +8,15 @@
 
 import UIKit
 
-extension VerticalChartRankingView: IconViewLayerDataSource {
+extension VerticalChartRankingView: IconViewDataSource {
+  func iconViewLayerImageType(_ iconViewLayer: IconView) -> ImageType {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    let imageType = dataSource.verticalChartRankingViewIconViewLayerImageType(self)
+    return imageType
+  }
+  
   func iconViewLayerTextLayerBackgroundColor(_ iconViewLayer: IconView) -> UIColor {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
@@ -74,7 +82,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
   
   func iconViewLayerLineModel(_ iconViewLayer: IconView) -> LineModel {
     //TODO: - 要去寫 LineModel == nil 的情況
-    return viewModel.currentLineModel ?? LineModel(id: "QQQ", name: "GGG", value: 0, icon: UIImage(), channelImage: UIImage())
+    return viewModel.currentLineModel ?? LineModel(id: "QQQ", name: "GGG", value: 0, iconNames: [""], channelImageName: "")
   }
   
   func iconViewLayerXTransationToValue(_ iconViewLayer: IconView) -> CGFloat {
@@ -196,7 +204,7 @@ extension VerticalChartRankingView: IconViewLayerDataSource {
   
 }
 
-extension VerticalChartRankingView: IconViewLayerDelegate {
+extension VerticalChartRankingView: IconViewDelegate {
   func iconViewLayerDoneAllAnimation(_ iconView: IconView) {
     if let currentLineView = viewModel.presentedLineViews.last {
       currentLineView.imageLayer.isHidden = false

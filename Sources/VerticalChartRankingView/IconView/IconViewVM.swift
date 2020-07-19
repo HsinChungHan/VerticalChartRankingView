@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IconViewLayerViewModel {
+class IconViewVM {
   private(set) var lineModel: LineModel
   
   var value: Float {
@@ -19,8 +19,17 @@ class IconViewLayerViewModel {
     return lineModel.id
   }
   
-  var icon: UIImage {
-    return lineModel.icon
+  var iconNames: [String] {
+    return lineModel.iconNames
+  }
+  
+  var icons: [UIImage] {
+    var icons = [UIImage]()
+    for iconName in iconNames {
+      let icon = UIImage(named: iconName)!
+      icons.append(icon)
+    }
+    return icons
   }
   
   var rank: Int {

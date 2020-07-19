@@ -14,15 +14,29 @@ public class LineModel {
   let name: String
   private(set) var value: Float
   private(set) var rank: Int = 0
-  let icon: UIImage
-  let channelImage: UIImage
+  let iconNames: [String]
+  let channelImageName: String
   
-  init(id: String, name: String, value: Float, icon: UIImage, channelImage: UIImage) {
+  var icons: [UIImage] {
+    var icons = [UIImage]()
+    for iconName in iconNames {
+      let icon = UIImage(named: iconName)!
+      icons.append(icon)
+    }
+    return icons
+  }
+  
+  var channelImage: UIImage {
+    let channelImage = UIImage(named: channelImageName)!
+    return channelImage
+  }
+  
+  init(id: String, name: String, value: Float, iconNames: [String], channelImageName: String) {
     self.id = id
     self.name = name
     self.value = value
-    self.icon = icon
-    self.channelImage = channelImage
+    self.iconNames = iconNames
+    self.channelImageName = channelImageName
   }
   
   func setRank(_ rank: Int) {

@@ -137,7 +137,7 @@ extension VerticalChartRankingView: LineViewDataSource {
   
   func lineViewLineModel(_ lineView: LineView) -> LineModel {
     //TODO: - 要去寫 LineModel == nil 的情況
-    return viewModel.currentLineModel ?? LineModel(id: "QQQ", name: "GGG", value: 0, icon: UIImage(), channelImage: UIImage())
+    return viewModel.currentLineModel ?? LineModel(id: "QQQ", name: "GGG", value: 0, iconNames: [""], channelImageName: "")
   }
   
   func lineViewTextLayerTextColor(_ lineView: LineView) -> UIColor {

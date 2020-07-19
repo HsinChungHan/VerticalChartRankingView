@@ -8,8 +8,15 @@
 
 import UIKit
 import CANumberTextLayer
+import HsinUtils
+import TinderStyleWipedCard
 
-protocol IconViewLayerDataSource: AnyObject {
+public enum ImageType {
+  case layerType
+  case deskViewType
+}
+
+protocol IconViewDataSource: AnyObject {
   
   func iconViewLayerLineModel(_ iconViewLayer: IconView) -> LineModel
   func iconViewLayerXTransationToValue(_ iconViewLayer: IconView) -> CGFloat
@@ -37,22 +44,24 @@ protocol IconViewLayerDataSource: AnyObject {
   func iconViewLayerTextLayerFont(_ iconViewLayer: IconView) -> UIFont
   func iconViewLayerImageLayerBackgroundColor(_ iconViewLayer: IconView) -> UIColor
   func iconViewLayerTextLayerBackgroundColor(_ iconViewLayer: IconView) -> UIColor
+  
+  func iconViewLayerImageType(_ iconViewLayer: IconView) -> ImageType
 }
 
-protocol IconViewLayerDelegate: AnyObject {
+protocol IconViewDelegate: AnyObject {
   func iconViewLayerDoneAllAnimation(_ iconView: IconView)
 }
 
 class IconView: UIView {
-  weak var dataSource: IconViewLayerDataSource?
-  weak var myDelegate: IconViewLayerDelegate?
+  weak var dataSource: IconViewDataSource?
+  weak var myDelegate: IconViewDelegate?
   lazy var vm = makeViewModel()
 }
 
 
 extension IconView {
   
-  fileprivate func makeViewModel() -> IconViewLayerViewModel {
+  fileprivate func makeViewModel() -> IconViewVM {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for IconView")
     }
@@ -68,8 +77,19 @@ extension IconView {
     let firstXYTransation = dataSource.iconViewLayerFirstXYTransationDuration(self)
     let initialDuration = opacityDuration + stayTransation + firstXYTransation
     
-    let vm = IconViewLayerViewModel(lineModel: lineModel, rankingViewMaxValue: rankingViewMaxValue, lineViewHeight: lineViewHeight, lineViewMaxY: lineViewMaxY, lineViewHeightScale: lineViewHeightScale, drawLineDuration: drawLineDuration, initialDuration: initialDuration)
+    let vm = IconViewVM(lineModel: lineModel, rankingViewMaxValue: rankingViewMaxValue, lineViewHeight: lineViewHeight, lineViewMaxY: lineViewMaxY, lineViewHeightScale: lineViewHeightScale, drawLineDuration: drawLineDuration, initialDuration: initialDuration)
     return vm
+  }
+  
+  fileprivate func makeCardDeskView() -> CardDeskView {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for IconViewLayer")
+    }
+    let bgColor = dataSource.iconViewLayerImageLayerBackgroundColor(self)
+    let deskView = CardDeskView()
+    deskView.backgroundColor = bgColor
+    deskView.dataSource = self
+    return deskView
   }
   
   fileprivate func makeImageLayer() -> CALayer {
@@ -80,7 +100,7 @@ extension IconView {
     let layer = CALayer()
     layoutIfNeeded()
     layer.frame = bounds
-    layer.contents = vm.icon.cgImage
+    layer.contents = vm.icons.last!.cgImage
     layer.contentsGravity = .resizeAspect
     layer.backgroundColor = bgColor
     layer.isGeometryFlipped = true
@@ -226,12 +246,22 @@ extension IconView {
     let width = dataSource.iconViewLayerWidthOfLayer(self)
     let imageLayerHeight = dataSource.iconViewLayerImageLayerHeiht(self)
     let textLayerHeight = dataSource.iconViewLayerTextLayerHeiht(self)
-    let imageLayer = makeImageLayer()
-    let textLayer = makeTextLayer()
-    layer.addSublayer(imageLayer)
-    layer.addSublayer(textLayer)
+    let imageType = dataSource.iconViewLayerImageType(self)
+    //在這邊決定要用 deskView 還是 imageLayer
+    switch imageType {
+      case .layerType:
+      	let imageLayer = makeImageLayer()
+       	layer.addSublayer(imageLayer)
+      	imageLayer.frame = CGRect(x: 0, y: 0, width: width, height: imageLayerHeight)
+      case .deskViewType:
+      	let imageDeskView = makeCardDeskView()
+      	addSubview(imageDeskView)
+      	imageDeskView.frame = CGRect(x: 0, y: 0, width: width, height: imageLayerHeight)
+        imageDeskView.launchTimer()
+    }
     
-    imageLayer.frame = CGRect(x: 0, y: 0, width: width, height: imageLayerHeight)
+    let textLayer = makeTextLayer()
+    layer.addSublayer(textLayer)
     textLayer.frame = CGRect(x: 0, y: imageLayerHeight, width: width, height: textLayerHeight)
     textLayer.launchDisplayLink()
     
@@ -332,5 +362,20 @@ extension IconView: CANumberTextLayerDataSource {
   
   func animationNumberTextLayerTextAlignment(_ animationNumberLabel: CANumberTextlayer) -> CATextLayerAlignmentMode {
     return .center
+  }
+}
+
+extension IconView: CardDeskViewDataSource {
+  func cardDeskViewARoundDuration(_ cardDeskView: CardDeskView) -> TimeInterval {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for IconView")
+    }
+    let duration = (dataSource.iconViewLayerStayDuration(self) + dataSource.iconViewLayerOpacityDuration(self)) / Double(vm.iconNames.count)
+    
+    return duration
+  }
+  
+  func cardDeskViewAllCardViewModelTuples(_ cardDeskView: CardDeskView) -> [(title: String, textAlignment: NSTextAlignment, images: [String])] {
+    return [(title: vm.id, textAlignment: .center, images: vm.iconNames)]
   }
 }
