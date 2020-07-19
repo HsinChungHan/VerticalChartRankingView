@@ -19,6 +19,10 @@ class IconViewVM {
     return lineModel.id
   }
   
+  var title: String {
+    return lineModel.name
+  }
+  
   var iconNames: [String] {
     return lineModel.iconNames
   }

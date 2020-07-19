@@ -377,6 +377,6 @@ extension IconView: CardDeskViewDataSource {
   }
   
   func cardDeskViewAllCardViewModelTuples(_ cardDeskView: CardDeskView) -> [(title: String, textAlignment: NSTextAlignment, images: [String])] {
-    return [(title: vm.id, textAlignment: .center, images: vm.iconNames)]
+    return [(title: vm.title, textAlignment: .center, images: vm.iconNames)]
   }
 }
