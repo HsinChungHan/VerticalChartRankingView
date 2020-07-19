@@ -62,7 +62,7 @@ extension VerticalChartRankingView: IconViewDataSource {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
     }
-    return dataSource.verticalChartRankingViewIconViewLayerFirstXYTransationDuration(self)
+    return dataSource.verticalChartRankingViewIconViewLayerStayDuration(self)
   }
   
   
