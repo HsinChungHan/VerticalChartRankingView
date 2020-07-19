@@ -257,6 +257,7 @@ extension IconView {
       	let imageDeskView = makeCardDeskView()
       	addSubview(imageDeskView)
       	imageDeskView.frame = CGRect(x: 0, y: 0, width: width, height: imageLayerHeight)
+        imageDeskView.putIntoCards()
         imageDeskView.launchTimer()
     }
     
