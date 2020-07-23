@@ -53,6 +53,8 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewBusinessLogo(_ rankingView: VerticalChartRankingView) -> String
   
   func verticalChartRankingLineViewIsPhotoLandscape(_ rankingView: VerticalChartRankingView) -> Bool
+  
+  func verticalChartRankingLineViewIsDataValueOrderIncreasing(_ rankingView: VerticalChartRankingView) -> Bool
 }
 
 public protocol VerticalChartRankingViewDelegate: AnyObject {

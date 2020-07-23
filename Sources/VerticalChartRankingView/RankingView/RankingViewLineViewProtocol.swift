@@ -9,6 +9,13 @@
 import UIKit
 
 extension VerticalChartRankingView: LineViewDataSource {
+  func lineViewIsDataValueOrderIncreasing(_ lineView: LineView) -> Bool {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    return dataSource.verticalChartRankingLineViewIsDataValueOrderIncreasing(self)
+  }
+  
   func lineViewIsPhotoLandscape(_ lineView: LineView) -> Bool {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
@@ -17,9 +24,15 @@ extension VerticalChartRankingView: LineViewDataSource {
     return dataSource.verticalChartRankingLineViewIsPhotoLandscape(self)
   }
   
-  func lineViewOrderNumber(_ lineView: LineView) -> Int {
-    return viewModel.currentLineModel?.rank ?? 999999
-//    return viewModel.lineViewOrderNumber
+  func lineViewInitialRankNumber(_ lineView: LineView) -> Int {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    let isDataValueOrderIncreasing = dataSource.verticalChartRankingLineViewIsDataValueOrderIncreasing(self)
+    if isDataValueOrderIncreasing {
+      return viewModel.presentedLineViewsCount
+    }
+    return (viewModel.currentLineModel?.rank ?? 99999) + 1
   }
   
   func lineViewStrokeColor(_ lineView: LineView) -> UIColor {

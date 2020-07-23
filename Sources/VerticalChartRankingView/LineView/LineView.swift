@@ -44,9 +44,11 @@ protocol LineViewDataSource: AnyObject {
   
   func lineViewShouldUseIDLabel(_ lineView: LineView) -> Bool
   
-  func lineViewOrderNumber(_ lineView: LineView) -> Int
+  func lineViewInitialRankNumber(_ lineView: LineView) -> Int
   
   func lineViewIsPhotoLandscape(_ lineView: LineView) -> Bool
+  
+  func lineViewIsDataValueOrderIncreasing(_ lineView: LineView) -> Bool
 }
 
 
@@ -151,7 +153,7 @@ extension LineView {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set max num for LineView's dataSource")
     }
-    let orderNumber = dataSource.lineViewOrderNumber(self)
+    let orderNumber = dataSource.lineViewInitialRankNumber(self)
     return makeLabel(name: "\(orderNumber.formattedToNumberStr())")
   }
   
@@ -396,6 +398,12 @@ extension LineView: CANumberTextLayerDataSource {
 
 extension LineView: LineViewModelDelegate {
   func lineViewModelRankDidChange(_ lineViewModel: LineViewModel) {
-    orderNumberLabel.text = "\(lineViewModel.rank.formattedToNumberStr())"
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for LineView's dataSource")
+    }
+    let isDataValueOrderIncreasing = dataSource.lineViewIsDataValueOrderIncreasing(self)
+    if !isDataValueOrderIncreasing {
+    	orderNumberLabel.text = "\(lineViewModel.rank.formattedToNumberStr())"
+    }
   }
 }

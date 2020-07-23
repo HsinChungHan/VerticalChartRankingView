@@ -18,7 +18,7 @@ class VeritcalChartRankingViewVM {
   fileprivate var presentedLineModels = [LineModel]()
   private(set) var presentedLineViews = [LineView]()
   
-  var lineViewOrderNumber: Int {
+  var presentedLineViewsCount: Int {
     return rawDataOflineModels.count + 1
   }
   
