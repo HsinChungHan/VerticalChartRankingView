@@ -397,13 +397,13 @@ extension LineView: CANumberTextLayerDataSource {
 }
 
 extension LineView: LineViewModelDelegate {
-  func lineViewModelRankDidChange(_ lineViewModel: LineViewModel) {
+  func lineViewModelRankDidChange(_ lineViewModel: LineViewModel, rank: Int) {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for LineView's dataSource")
     }
     let isDataValueOrderIncreasing = dataSource.lineViewIsDataValueOrderIncreasing(self)
     if !isDataValueOrderIncreasing {
-    	orderNumberLabel.text = "\(lineViewModel.rank.formattedToNumberStr())"
+      orderNumberLabel.text = "\(rank.formattedToNumberStr())"
     }
   }
 }

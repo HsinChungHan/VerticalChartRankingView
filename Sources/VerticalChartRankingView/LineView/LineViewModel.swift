@@ -9,7 +9,7 @@
 import UIKit
 
 protocol LineViewModelDelegate: AnyObject {
-  func lineViewModelRankDidChange(_ lineViewModel: LineViewModel)
+  func lineViewModelRankDidChange(_ lineViewModel: LineViewModel, rank: Int)
 }
 
 class LineViewModel {
@@ -101,7 +101,7 @@ class LineViewModel {
   
   func setRank(_ rank: Int) {
     self.rank = rank
-    delegate?.lineViewModelRankDidChange(self)
+    delegate?.lineViewModelRankDidChange(self, rank: rank + 1)
   }
   
   func didChangeValue() {

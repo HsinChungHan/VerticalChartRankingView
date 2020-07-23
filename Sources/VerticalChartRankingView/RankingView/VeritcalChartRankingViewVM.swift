@@ -116,7 +116,7 @@ class VeritcalChartRankingViewVM {
     //最後去更新 currentLineModel, presentedLineModels, presentedRankingNodeView 的 rank
     for (newModelIndex, newModel) in sortedNewPresentedLineModels.enumerated() {
       if newModel.id == currentLineModel.id {
-        self.currentLineModel?.setRank(newModelIndex + 1)
+        self.currentLineModel?.setRank(newModelIndex)
       }
       
       for (modelIndex, model) in presentedLineModels.enumerated() {
