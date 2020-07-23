@@ -186,7 +186,9 @@ extension LineView {
     let maxY = dataSource.lineViewMaxY(self)
     let lineViewHeightScale = dataSource.lineViewHeightScale(self)
     
-    return LineViewModel(lineModel: lineModel, rankingViewMaxValue: maxValue, lineViewHeight: height, maxY: maxY, lineViewHeightScale: lineViewHeightScale)
+    let lineViewModel = LineViewModel(lineModel: lineModel, rankingViewMaxValue: maxValue, lineViewHeight: height, maxY: maxY, lineViewHeightScale: lineViewHeightScale)
+    lineViewModel.delegate = self
+    return lineViewModel
   }
   
   fileprivate func setupLayout() {
@@ -400,5 +402,11 @@ extension LineView: CANumberTextLayerDataSource {
   
   func animationNumberTextLayerTextAlignment(_ animationNumberLabel: CANumberTextlayer) -> CATextLayerAlignmentMode {
     return .center
+  }
+}
+
+extension LineView: LineViewModelDelegate {
+  func lineViewModelRankDidChange(_ lineViewModel: LineViewModel) {
+    idLabel.text = "\(viewModel.rank)"
   }
 }
