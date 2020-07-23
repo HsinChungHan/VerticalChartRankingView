@@ -18,7 +18,8 @@ extension VerticalChartRankingView: LineViewDataSource {
   }
   
   func lineViewOrderNumber(_ lineView: LineView) -> Int {
-    return viewModel.lineViewOrderNumber
+    return viewModel.currentLineModel?.rank ?? 999999
+//    return viewModel.lineViewOrderNumber
   }
   
   func lineViewStrokeColor(_ lineView: LineView) -> UIColor {
