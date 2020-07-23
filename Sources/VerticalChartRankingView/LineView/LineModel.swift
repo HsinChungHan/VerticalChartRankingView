@@ -13,7 +13,7 @@ public class LineModel {
   let id: String
   let name: String
   private(set) var value: Float
-  private(set) var rank: Int = 0
+  private(set) var rank: Int = 999999
   let iconNames: [String]
   let channelImageName: String
   

@@ -152,18 +152,7 @@ extension LineView {
       fatalError("🚨 You have to set max num for LineView's dataSource")
     }
     let orderNumber = dataSource.lineViewOrderNumber(self)
-    var suffixStr = "th"
-    switch orderNumber {
-      case 1:
-      	suffixStr = "st"
-      case 2:
-      	suffixStr = "nd"
-      case 3:
-      	suffixStr = "rd"
-      default:
-      	break
-    }
-    return makeLabel(name: "\(orderNumber)\(suffixStr)")
+    return makeLabel(name: "\(orderNumber.formattedToNumberStr())")
   }
   
   fileprivate func makeImageView(image: UIImage) -> UIImageView {
@@ -407,6 +396,6 @@ extension LineView: CANumberTextLayerDataSource {
 
 extension LineView: LineViewModelDelegate {
   func lineViewModelRankDidChange(_ lineViewModel: LineViewModel) {
-    orderNumberLabel.text = "\(lineViewModel.rank)"
+    orderNumberLabel.text = "\(lineViewModel.rank.formattedToNumberStr())"
   }
 }
