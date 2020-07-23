@@ -407,6 +407,6 @@ extension LineView: CANumberTextLayerDataSource {
 
 extension LineView: LineViewModelDelegate {
   func lineViewModelRankDidChange(_ lineViewModel: LineViewModel) {
-    idLabel.text = "\(viewModel.rank)"
+    idLabel.text = "\(lineViewModel.rank)"
   }
 }
