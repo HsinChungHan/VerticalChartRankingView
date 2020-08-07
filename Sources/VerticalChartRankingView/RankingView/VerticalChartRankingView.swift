@@ -51,6 +51,7 @@ public protocol VerticalChartRankingViewDataSource: AnyObject {
   func verticalChartRankingViewIconViewLayerTextLayerBackgroundColor(_ rankingView: VerticalChartRankingView) -> UIColor
   func verticalChartRankingViewIconViewLayerImageType(_ rankingView: VerticalChartRankingView) -> ImageType
   func verticalChartRankingViewBusinessLogo(_ rankingView: VerticalChartRankingView) -> String
+	func verticalChartRankingViewHopImage(_ rankingView: VerticalChartRankingView) -> String
   
   func verticalChartRankingLineViewIsPhotoLandscape(_ rankingView: VerticalChartRankingView) -> Bool
   
@@ -72,6 +73,8 @@ public class VerticalChartRankingView: UIView {
   lazy var scrollView = makeScrollView()
   lazy var overallView = makeOverallView()
   lazy var logoImageView = makeLogoImageView()
+  lazy var hopImageView = makeHopImageView()
+  
   
   var lastIconViewLayer: IconView?
   var timer: Timer?
@@ -102,6 +105,7 @@ public class VerticalChartRankingView: UIView {
   }
   
   @objc func onTimerFires(sender: Timer) {
+    hopImageView.removeFromSuperview()
     delegate?.verticalChartRankingDidStart(self)
     lastIconViewLayer?.initializeLayer()
     guard let lineModel = viewModel.lineModelsPopLast(), let dataSource = dataSource else {
@@ -275,6 +279,18 @@ public class VerticalChartRankingView: UIView {
     return imageView
   }
   
+  func makeHopImageView() -> UIImageView {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for RankingView.")
+    }
+    let imageName = dataSource.verticalChartRankingViewHopImage(self)
+    let imageView = UIImageView()
+    imageView.image = UIImage(named: imageName)
+    imageView.contentMode = .scaleAspectFill
+    imageView.clipsToBounds = true
+    return imageView
+  }
+  
   fileprivate func makeUpperGradientLayer() -> CAGradientLayer {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for RankingView.")
@@ -325,6 +341,9 @@ public class VerticalChartRankingView: UIView {
     let lowerGradientLayer = makeLowerGradientLayer()
     lowerGradientLayer.frame = CGRect(x: overallView.bounds.minX, y: overallView.bounds.maxY - overallView.bounds.height / 5, width: overallView.bounds.width, height: overallView.bounds.height / 5)
     overallView.layer.addSublayer(lowerGradientLayer)
+    
+    addSubview(hopImageView)
+    hopImageView.fillSuperView()
   }
 }
 
