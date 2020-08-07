@@ -13,7 +13,12 @@ import TinderStyleWipedCard
 
 public enum ImageType {
   case layerType
-  case deskViewType
+  
+  //contentMode=aspectFill, gradientLayer=true, informationLabel=true
+  case defaultDeskViewType
+  
+  //contentMode=aspectFit, gradientLayer=false, informationLabel=false
+  case puredDeskViewType
 }
 
 protocol IconViewDataSource: AnyObject {
@@ -46,6 +51,8 @@ protocol IconViewDataSource: AnyObject {
   func iconViewLayerTextLayerBackgroundColor(_ iconViewLayer: IconView) -> UIColor
   
   func iconViewLayerImageType(_ iconViewLayer: IconView) -> ImageType
+  
+  
 }
 
 protocol IconViewDelegate: AnyObject {
@@ -253,7 +260,7 @@ extension IconView {
       	let imageLayer = makeImageLayer()
        	layer.addSublayer(imageLayer)
       	imageLayer.frame = CGRect(x: 0, y: 0, width: width, height: imageLayerHeight)
-      case .deskViewType:
+      default:
       	let imageDeskView = makeCardDeskView()
       	addSubview(imageDeskView)
       	imageDeskView.frame = CGRect(x: 0, y: 0, width: width, height: imageLayerHeight)
@@ -367,6 +374,45 @@ extension IconView: CANumberTextLayerDataSource {
 }
 
 extension IconView: CardDeskViewDataSource {
+  func cardDeskViewCardPhotoContentMode(_ cardDeskView: CardDeskView) -> UIView.ContentMode {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for IconView")
+    }
+    let type = dataSource.iconViewLayerImageType(self)
+    switch type {
+      case .puredDeskViewType:
+        return .scaleAspectFit
+      default:
+      	return .scaleAspectFill
+    }
+  }
+  
+  func cardDeskViewCardShouldAddGradientLayer(_ cardDeskView: CardDeskView) -> Bool {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for IconView")
+    }
+    let type = dataSource.iconViewLayerImageType(self)
+    switch type {
+      case .puredDeskViewType:
+        return false
+      default:
+        return true
+    }
+  }
+  
+  func cardDeskViewCardShouldAddInformationLabel(_ cardDeskView: CardDeskView) -> Bool {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for IconView")
+    }
+    let type = dataSource.iconViewLayerImageType(self)
+    switch type {
+      case .puredDeskViewType:
+        return false
+      default:
+        return true
+    }
+  }
+  
   func cardDeskViewARoundDuration(_ cardDeskView: CardDeskView) -> TimeInterval {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for IconView")
