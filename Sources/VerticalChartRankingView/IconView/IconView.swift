@@ -374,6 +374,19 @@ extension IconView: CANumberTextLayerDataSource {
 }
 
 extension IconView: CardDeskViewDataSource {
+  func cardDeskViewCardShouldAddBarStackView(_ cardDeskView: CardDeskView) -> Bool {
+    guard let dataSource = dataSource else {
+      fatalError("🚨 You have to set dataSource for IconView")
+    }
+    let type = dataSource.iconViewLayerImageType(self)
+    switch type {
+      case .puredDeskViewType:
+        return false
+      default:
+        return true
+    }
+  }
+  
   func cardDeskViewCardPhotoContentMode(_ cardDeskView: CardDeskView) -> UIView.ContentMode {
     guard let dataSource = dataSource else {
       fatalError("🚨 You have to set dataSource for IconView")
